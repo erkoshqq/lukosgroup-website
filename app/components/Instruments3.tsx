@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence, PanInfo } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -220,8 +220,7 @@ export default function EquipmentAppleDock() {
   const [isMobile, setIsMobile] = useState(false);
   const totalItems = equipment.length;
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dragStartX = useRef(0);
+  const touchStartX = useRef<number | null>(null);
 
   // Detect mobile once + on resize
   useEffect(() => {
@@ -231,18 +230,30 @@ export default function EquipmentAppleDock() {
     return () => window.removeEventListener("resize", detect);
   }, []);
 
+  // Swipe controls
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
 
-  const handlePrev = () => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+
+    if (Math.abs(delta) > 50) {
+      delta < 0 ? handleNext() : handlePrev();
+    }
+
+    touchStartX.current = null;
+  };
+
+  const handlePrev = () =>
     setCenterIndex((prev) => (prev - 1 + totalItems) % totalItems);
-    if (navigator.vibrate) navigator.vibrate(20);
-  };
 
-  const handleNext = () => {
+  const handleNext = () =>
     setCenterIndex((prev) => (prev + 1) % totalItems);
-    if (navigator.vibrate) navigator.vibrate(20);
-  };
 
-  // Keyboard navigation
+  // Keyboard
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") handlePrev();
@@ -252,19 +263,25 @@ export default function EquipmentAppleDock() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Oval layout calculation
+  // Oval layout
   const getItemStyle = (index: number) => {
     let diff = index - centerIndex;
+
     if (diff > totalItems / 2) diff -= totalItems;
     if (diff < -totalItems / 2) diff += totalItems;
 
     const angle = (diff / totalItems) * Math.PI * 2;
+
     const radiusX = isMobile ? 160 : 300;
     const radiusY = isMobile ? 50 : 80;
 
     const x = Math.sin(angle) * radiusX;
     const y = Math.cos(angle) * radiusY;
-    const scale = isMobile ? 0.55 + 0.25 * Math.cos(angle) : 0.6 + 0.3 * Math.cos(angle);
+
+    const scale = isMobile
+      ? 0.55 + 0.25 * Math.cos(angle)
+      : 0.6 + 0.3 * Math.cos(angle);
+
     const opacity = 0.55 + 0.45 * Math.cos(angle);
     const zIndex = Math.round(scale * 100);
 
@@ -274,18 +291,25 @@ export default function EquipmentAppleDock() {
   const currentEquipment = equipment[centerIndex];
 
   return (
-    <section className="min-h-screen w-full bg-gray-900 py-16 px-4 overflow-hidden">
+    <section
+      className="min-h-screen w-full bg-gray-900 py-16 px-4 overflow-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className="max-w-7xl mx-auto text-center text-white mb-12">
-        <p className="text-xs text-blue-400 tracking-[0.2em] uppercase mb-3">НАШЕ ОБОРУДОВАНИЕ</p>
-        <h2 className="text-3xl md:text-5xl font-semibold mb-2">Современная приборная база</h2>
+        <p className="text-xs text-blue-400 tracking-[0.2em] uppercase mb-3">
+          НАШЕ ОБОРУДОВАНИЕ
+        </p>
+        <h2 className="text-3xl md:text-5xl font-semibold mb-2">
+          Современная приборная база
+        </h2>
         <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
           {totalItems} единиц высокоточного оборудования для неразрушающего контроля
         </p>
       </div>
 
-      {/* 3D Oval with Drag */}
+      {/* 3D ОВАЛ */}
       <div
-        ref={containerRef}
         className="relative h-[350px] md:h-[500px] flex items-center justify-center"
         style={{ perspective: "1500px" }}
       >
@@ -305,37 +329,31 @@ export default function EquipmentAppleDock() {
                 opacity,
                 z: Math.cos(rad) * 100,
               }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              drag={isMobile ? "x" : false}
-              dragElastic={0.4}
-              dragConstraints={{ left: 0, right: 0 }}
-              onDragStart={(event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-                dragStartX.current = info.point.x;
-              }}
-
-              onDragEnd={(event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-                const delta = info.point.x - dragStartX.current!;
-                if (Math.abs(delta) > 30) {
-                  delta < 0 ? handleNext() : handlePrev();
-                }
-              }}
+              transition={{ type: "spring", stiffness: 200, damping: 30 }}
               onClick={() => setCenterIndex(index)}
             >
               <div
-                className={`rounded-2xl overflow-hidden shadow-xl ${isMobile
-                  ? isCenter ? "w-44 h-44" : "w-32 h-32"
-                  : isCenter ? "w-72 h-72" : "w-56 h-56"
+                className={`rounded-2xl overflow-hidden shadow-xl ${
+                  isMobile
+                    ? isCenter ? "w-44 h-44" : "w-32 h-32"
+                    : isCenter ? "w-72 h-72" : "w-56 h-56"
                 }`}
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
-                {isCenter && <div className="absolute inset-0 rounded-2xl ring-4 ring-blue-500 ring-opacity-60" />}
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="w-full h-full object-cover"
+                />
+                {isCenter && (
+                  <div className="absolute inset-0 rounded-2xl ring-4 ring-blue-500 ring-opacity-60" />
+                )}
               </div>
             </motion.div>
           );
         })}
 
-        {/* Desktop navigation */}
+        {/* NAVIGATION BUTTONS — HIDDEN ON MOBILE */}
         {!isMobile && (
           <>
             <button
@@ -354,7 +372,7 @@ export default function EquipmentAppleDock() {
         )}
       </div>
 
-      {/* Info Panel */}
+      {/* INFO PANEL */}
       <div className="mt-10 max-w-xl mx-auto">
         <AnimatePresence mode="wait">
           <motion.div
@@ -365,11 +383,22 @@ export default function EquipmentAppleDock() {
             transition={{ duration: 0.3 }}
             className="text-center text-white bg-white/5 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/10"
           >
-            <h3 className="text-2xl md:text-3xl font-bold mb-2">{currentEquipment.name}</h3>
-            <p className="text-blue-400 text-base md:text-lg mb-3">{currentEquipment.category}</p>
-            <p className="text-gray-300 text-sm md:text-base mb-3">{currentEquipment.description}</p>
+            <h3 className="text-2xl md:text-3xl font-bold mb-2">
+              {currentEquipment.name}
+            </h3>
+
+            <p className="text-blue-400 text-base md:text-lg mb-3">
+              {currentEquipment.category}
+            </p>
+
+            <p className="text-gray-300 text-sm md:text-base mb-3">
+              {currentEquipment.description}
+            </p>
+
             <ul className="text-gray-300 text-left list-disc list-inside text-sm md:text-base">
-              {currentEquipment.specs?.map((s, i) => (<li key={i}>{s}</li>))}
+              {currentEquipment.specs?.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
             </ul>
           </motion.div>
         </AnimatePresence>
