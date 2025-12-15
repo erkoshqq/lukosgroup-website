@@ -221,6 +221,7 @@ export default function EquipmentAppleDock() {
   const totalItems = equipment.length;
 
   const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   // Detect mobile once + on resize
   useEffect(() => {
@@ -233,18 +234,22 @@ export default function EquipmentAppleDock() {
   // Swipe controls
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
+    if (touchStartX.current === null || touchStartY.current === null) return;
 
-    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
 
-    if (Math.abs(delta) > 50) {
-      delta < 0 ? handleNext() : handlePrev();
+    // Игнорируем вертикальные свайпы
+    if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      deltaX < 0 ? handleNext() : handlePrev();
     }
 
     touchStartX.current = null;
+    touchStartY.current = null;
   };
 
   const handlePrev = () =>
