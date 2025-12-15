@@ -309,12 +309,12 @@ export default function EquipmentAppleDock() {
               drag={isMobile ? "x" : false}
               dragElastic={0.4}
               dragConstraints={{ left: 0, right: 0 }}
-              onDragStart={(_event: React.MouseEvent | React.TouchEvent, info: PanInfo) => {
+              onDragStart={(event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
                 dragStartX.current = info.point.x;
               }}
 
-              onDragEnd={(_event: React.MouseEvent | React.TouchEvent, info: PanInfo) => {
-                const delta = info.point.x - dragStartX.current;
+              onDragEnd={(event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+                const delta = info.point.x - dragStartX.current!;
                 if (Math.abs(delta) > 30) {
                   delta < 0 ? handleNext() : handlePrev();
                 }
