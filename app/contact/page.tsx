@@ -184,7 +184,7 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        placeholder="Иван Иванов"
+                        placeholder="Серик Сериков"
                         className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white text-gray-900 placeholder-gray-400"
                       />
                     </div>
@@ -206,7 +206,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white text-gray-900 placeholder-gray-400"
-                        placeholder="+7 (700) 123-45-67"
+                        placeholder="+7 (700) 000-00-00"
                       />
                     </div>
                   </div>
@@ -226,7 +226,7 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white text-gray-900 placeholder-gray-400"
-                        placeholder="example@mail.com"
+                        placeholder="example@gmail.com"
                       />
                     </div>
                   </div>

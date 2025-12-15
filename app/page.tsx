@@ -10,10 +10,10 @@ import { motion } from "framer-motion";
 import dynamic from 'next/dynamic';
 
 // Замени обычный импорт на динамический
-const EquipmentDoubleRing = dynamic(
-  () => import('./components/Instruments'),
-  { ssr: false }
-);
+// const EquipmentDoubleRing = dynamic(
+//   () => import('./components/Instruments'),
+//   { ssr: false }
+// );
 const EquipmentAppleDock = dynamic(
   () => import('./components/Instruments3'),
   { ssr: false }
@@ -78,9 +78,10 @@ export default function Home() {
       
       <AboutIntro />
       <ServicesSlider/>
-      <EquipmentDoubleRing/>
-      <EquipmentAppleDock/>
+      {/* <EquipmentDoubleRing/> */}
+
       <CompletedProjects/>
+      <EquipmentAppleDock/>
       <TestimonialsSlider/>
       <ClientsMarquee/>
       <CertificatesSlider/>
