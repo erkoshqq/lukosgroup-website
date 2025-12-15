@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import SmoothScroll from "./components/SmoothScroll";
 import Footer from "./components/Footer";
 import CTAConsultation from "./components/CTAConsultation";
+import BitrixWidget from './components/BitrixWidget';
 
 export const metadata = {
   title: "Lukos Group",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="ru">
       <body>
         <SmoothScroll/>
+        <BitrixWidget />
         <Header />
           {children}
         <CTAConsultation/>

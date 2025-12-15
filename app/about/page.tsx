@@ -428,7 +428,7 @@ export default function AboutPageHero() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-1 items-center"
           >
             <div className="flex items-center justify-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors grayscale hover:grayscale-0">
               <img 
@@ -462,6 +462,13 @@ export default function AboutPageHero() {
               <img 
                 src="/clients/temirzholy.avif" 
                 alt="Қазақстан темір жолы"
+                className="max-w-full h-16 object-contain"
+              />
+            </div>
+            <div className="flex items-center justify-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors grayscale hover:grayscale-0">
+              <img 
+                src="/clients/bogatyr.webp" 
+                alt="Богатырь комир"
                 className="max-w-full h-16 object-contain"
               />
             </div>
