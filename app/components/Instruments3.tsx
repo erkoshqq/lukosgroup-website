@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 
@@ -221,12 +221,11 @@ export default function EquipmentAppleDock() {
   const [isMobile, setIsMobile] = useState(false);
   const totalItems = equipment.length;
 
-  const touchStartX = useRef<number | null>(null);
-  const touchStartTime = useRef<number>(0);
-  const velocity = useRef<number>(0);
-  const lastTouchX = useRef<number>(0);
-  const animationFrameId = useRef<number | null>(null);
-  const lastVibrateIndex = useRef<number>(0);
+  const touchStartY = useRef<number>(0);
+  const currentTouchY = useRef<number>(0);
+  const accumulatedDelta = useRef<number>(0);
+  const lastVibratedIndex = useRef<number>(0);
+  const isScrolling = useRef<boolean>(false);
 
   // Detect mobile
   useEffect(() => {
@@ -236,135 +235,84 @@ export default function EquipmentAppleDock() {
     return () => window.removeEventListener("resize", detect);
   }, []);
 
-  // Haptic feedback (вибрация) с улучшенной совместимостью
+  // Haptic feedback - более агрессивный подход
   const triggerHaptic = () => {
-    // Попытка 1: Vibration API
-    if (typeof window !== 'undefined' && navigator.vibrate) {
-      try {
+    // Пробуем все возможные методы
+    try {
+      // Метод 1: Vibration API
+      if (navigator.vibrate) {
         navigator.vibrate(10);
-      } catch (e) {
-        console.log('Vibration not supported');
       }
-    }
-    
-    // Попытка 2: iOS Haptic Engine (для Safari на iPhone)
-    if (typeof window !== 'undefined' && 'ontouchstart' in window) {
-      try {
-        // @ts-ignore - iOS specific API
-        if (window.webkit?.messageHandlers?.haptic) {
-          // @ts-ignore
-          window.webkit.messageHandlers.haptic.postMessage('impact');
-        }
-      } catch (e) {
-        // Silent fail
+      
+      // Метод 2: Для старых Android
+      // @ts-ignore
+      if (navigator.vibrate) {
+        // @ts-ignore
+        navigator.vibrate([10]);
       }
+      
+      // Метод 3: Webkit (некоторые браузеры)
+      // @ts-ignore
+      if (navigator.webkitVibrate) {
+        // @ts-ignore
+        navigator.webkitVibrate(10);
+      }
+
+      // Метод 4: Moz prefix
+      // @ts-ignore
+      if (navigator.mozVibrate) {
+        // @ts-ignore
+        navigator.mozVibrate(10);
+      }
+    } catch (e) {
+      // Silent fail
     }
   };
 
-  // Improved touch controls with velocity tracking
+  // Real-time scroll при движении пальца
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    lastTouchX.current = e.touches[0].clientX;
-    touchStartTime.current = Date.now();
-    velocity.current = 0;
-    
-    // Cancel any ongoing animation
-    if (animationFrameId.current) {
-      cancelAnimationFrame(animationFrameId.current);
-    }
+    touchStartY.current = e.touches[0].clientY;
+    currentTouchY.current = e.touches[0].clientY;
+    accumulatedDelta.current = 0;
+    isScrolling.current = true;
+    lastVibratedIndex.current = centerIndex;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
+    if (!isScrolling.current) return;
 
-    const currentX = e.touches[0].clientX;
-    const timeDelta = Date.now() - touchStartTime.current;
+    const currentY = e.touches[0].clientY;
+    const deltaY = currentTouchY.current - currentY;
     
-    if (timeDelta > 0) {
-      velocity.current = (currentX - lastTouchX.current) / timeDelta;
+    currentTouchY.current = currentY;
+    accumulatedDelta.current += deltaY;
+
+    // Чувствительность (пикселей на один элемент)
+    const threshold = 50; // Меньше = чувствительнее
+
+    // Когда накопили достаточно движения - переключаем элемент
+    if (Math.abs(accumulatedDelta.current) >= threshold) {
+      const direction = accumulatedDelta.current > 0 ? 1 : -1;
+      
+      setCenterIndex((prev) => {
+        const next = (prev + direction + totalItems) % totalItems;
+        
+        // Вибрация при смене элемента
+        if (next !== lastVibratedIndex.current) {
+          triggerHaptic();
+          lastVibratedIndex.current = next;
+        }
+        
+        return next;
+      });
+
+      accumulatedDelta.current = 0;
     }
-    
-    lastTouchX.current = currentX;
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-
-    const endX = e.changedTouches[0].clientX;
-    const deltaX = endX - touchStartX.current;
-    const timeDelta = Date.now() - touchStartTime.current;
-
-    // Calculate final velocity
-    const finalVelocity = velocity.current;
-
-    // Sensitivity - how much to scroll based on swipe
-    const sensitivity = 0.015; // Lower = more sensitive
-    const minSwipe = 30; // Minimum swipe distance
-    
-    // Calculate how many items to scroll
-    let itemsToScroll = 0;
-
-    if (Math.abs(deltaX) > minSwipe || Math.abs(finalVelocity) > 0.3) {
-      // Base scroll from distance
-      itemsToScroll = Math.round(deltaX * sensitivity);
-      
-      // Add velocity-based momentum (как у iPhone)
-      const momentumScroll = Math.round(finalVelocity * 15);
-      itemsToScroll += momentumScroll;
-      
-      // Clamp to reasonable values
-      itemsToScroll = Math.max(-5, Math.min(5, itemsToScroll));
-    }
-
-    if (itemsToScroll !== 0) {
-      smoothScrollToIndex(centerIndex - itemsToScroll);
-    }
-
-    touchStartX.current = null;
-  };
-
-  // Smooth scroll with haptic feedback
-  const smoothScrollToIndex = (targetIndex: number) => {
-    const normalizedTarget = ((targetIndex % totalItems) + totalItems) % totalItems;
-    const start = centerIndex;
-    const distance = normalizedTarget - start;
-    
-    // Handle wrap-around for shortest path
-    let shortestDistance = distance;
-    if (Math.abs(distance) > totalItems / 2) {
-      shortestDistance = distance > 0 
-        ? distance - totalItems 
-        : distance + totalItems;
-    }
-
-    const steps = Math.abs(shortestDistance);
-    let currentStep = 0;
-    
-    const animateStep = () => {
-      if (currentStep < steps) {
-        const direction = shortestDistance > 0 ? 1 : -1;
-        setCenterIndex((prev) => {
-          const next = (prev + direction + totalItems) % totalItems;
-          
-          // Trigger haptic on each step
-          if (next !== lastVibrateIndex.current) {
-            triggerHaptic();
-            lastVibrateIndex.current = next;
-          }
-          
-          return next;
-        });
-        
-        currentStep++;
-        
-        // Деление на 60 дает ~60fps, можно уменьшить для большей скорости
-        animationFrameId.current = window.requestAnimationFrame(() => {
-          setTimeout(animateStep, 1000 / 60);
-        });
-      }
-    };
-    
-    animateStep();
+  const handleTouchEnd = () => {
+    isScrolling.current = false;
+    accumulatedDelta.current = 0;
   };
 
   const handlePrev = () => {
@@ -385,15 +333,6 @@ export default function EquipmentAppleDock() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  // Cleanup animation on unmount
-  useEffect(() => {
-    return () => {
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-    };
   }, []);
 
   // Oval layout
@@ -425,7 +364,7 @@ export default function EquipmentAppleDock() {
 
   return (
     <section
-      className="min-h-screen w-full bg-gray-900 py-16 px-4 overflow-hidden"
+      className="min-h-screen w-full bg-gray-900 py-16 px-4 overflow-hidden touch-none"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -441,6 +380,17 @@ export default function EquipmentAppleDock() {
           {totalItems} единиц высокоточного оборудования для неразрушающего контроля
         </p>
       </div>
+
+      {/* TEST VIBRATION BUTTON */}
+      <button
+        onClick={() => {
+          const result = navigator.vibrate ? navigator.vibrate(100) : false;
+          alert(`Vibration test: ${result ? 'SUCCESS' : 'FAILED'}\nUser Agent: ${navigator.userAgent}`);
+        }}
+        className="fixed top-24 left-4 z-50 bg-red-600 text-white px-4 py-2 rounded-lg text-xs md:hidden"
+      >
+        TEST VIBRATE
+      </button>
 
       {/* 3D OVAL */}
       <div
@@ -465,8 +415,8 @@ export default function EquipmentAppleDock() {
               }}
               transition={{ 
                 type: "spring", 
-                stiffness: 250, 
-                damping: 35,
+                stiffness: 300, 
+                damping: 30,
                 mass: 0.5
               }}
               onClick={() => {
