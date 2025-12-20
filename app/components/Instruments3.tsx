@@ -221,13 +221,11 @@ export default function EquipmentAppleDock() {
   const [isMobile, setIsMobile] = useState(false);
   const totalItems = equipment.length;
 
-  const touchStartY = useRef<number>(0);
-  const currentTouchY = useRef<number>(0);
-  const accumulatedDelta = useRef<number>(0);
-  const lastVibratedIndex = useRef<number>(0);
-  const isScrolling = useRef<boolean>(false);
+  const currentTouchX = useRef(0);
+  const accumulatedDelta = useRef(0);
+  const isScrolling = useRef(false);
 
-  // Detect mobile
+  /* Detect mobile */
   useEffect(() => {
     const detect = () => setIsMobile(window.innerWidth < 768);
     detect();
@@ -235,77 +233,28 @@ export default function EquipmentAppleDock() {
     return () => window.removeEventListener("resize", detect);
   }, []);
 
-  // Haptic feedback - более агрессивный подход
-  const triggerHaptic = () => {
-    // Пробуем все возможные методы
-    try {
-      // Метод 1: Vibration API
-      if (navigator.vibrate) {
-        navigator.vibrate(10);
-      }
-      
-      // Метод 2: Для старых Android
-      // @ts-ignore
-      if (navigator.vibrate) {
-        // @ts-ignore
-        navigator.vibrate([10]);
-      }
-      
-      // Метод 3: Webkit (некоторые браузеры)
-      // @ts-ignore
-      if (navigator.webkitVibrate) {
-        // @ts-ignore
-        navigator.webkitVibrate(10);
-      }
-
-      // Метод 4: Moz prefix
-      // @ts-ignore
-      if (navigator.mozVibrate) {
-        // @ts-ignore
-        navigator.mozVibrate(10);
-      }
-    } catch (e) {
-      // Silent fail
-    }
-  };
-
-  // Real-time scroll при движении пальца
+  /* Touch handlers */
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
-    currentTouchY.current = e.touches[0].clientY;
+    currentTouchX.current = e.touches[0].clientX;
     accumulatedDelta.current = 0;
     isScrolling.current = true;
-    lastVibratedIndex.current = centerIndex;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isScrolling.current) return;
 
-    const currentY = e.touches[0].clientY;
-    const deltaY = currentTouchY.current - currentY;
-    
-    currentTouchY.current = currentY;
-    accumulatedDelta.current += deltaY;
+    const x = e.touches[0].clientX;
+    const delta = currentTouchX.current - x;
 
-    // Чувствительность (пикселей на один элемент)
-    const threshold = 50; // Меньше = чувствительнее
+    currentTouchX.current = x;
+    accumulatedDelta.current += delta;
 
-    // Когда накопили достаточно движения - переключаем элемент
+    const threshold = 50;
+
     if (Math.abs(accumulatedDelta.current) >= threshold) {
       const direction = accumulatedDelta.current > 0 ? 1 : -1;
-      
-      setCenterIndex((prev) => {
-        const next = (prev + direction + totalItems) % totalItems;
-        
-        // Вибрация при смене элемента
-        if (next !== lastVibratedIndex.current) {
-          triggerHaptic();
-          lastVibratedIndex.current = next;
-        }
-        
-        return next;
-      });
 
+      setCenterIndex((prev) => (prev + direction + totalItems) % totalItems);
       accumulatedDelta.current = 0;
     }
   };
@@ -315,30 +264,25 @@ export default function EquipmentAppleDock() {
     accumulatedDelta.current = 0;
   };
 
-  const handlePrev = () => {
-    triggerHaptic();
+  const handlePrev = () =>
     setCenterIndex((prev) => (prev - 1 + totalItems) % totalItems);
-  };
 
-  const handleNext = () => {
-    triggerHaptic();
+  const handleNext = () =>
     setCenterIndex((prev) => (prev + 1) % totalItems);
-  };
 
-  // Keyboard
+  /* Keyboard */
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") handlePrev();
       if (e.key === "ArrowRight") handleNext();
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Oval layout
+  /* Oval layout */
   const getItemStyle = (index: number) => {
     let diff = index - centerIndex;
-
     if (diff > totalItems / 2) diff -= totalItems;
     if (diff < -totalItems / 2) diff += totalItems;
 
@@ -347,52 +291,41 @@ export default function EquipmentAppleDock() {
     const radiusX = isMobile ? 160 : 300;
     const radiusY = isMobile ? 50 : 80;
 
-    const x = Math.sin(angle) * radiusX;
-    const y = Math.cos(angle) * radiusY;
-
-    const scale = isMobile
-      ? 0.55 + 0.25 * Math.cos(angle)
-      : 0.6 + 0.3 * Math.cos(angle);
-
-    const opacity = 0.55 + 0.45 * Math.cos(angle);
-    const zIndex = Math.round(scale * 100);
-
-    return { x, y, scale, opacity, zIndex, rad: angle };
+    return {
+      x: Math.sin(angle) * radiusX,
+      y: Math.cos(angle) * radiusY,
+      scale: isMobile
+        ? 0.55 + 0.25 * Math.cos(angle)
+        : 0.6 + 0.3 * Math.cos(angle),
+      opacity: 0.55 + 0.45 * Math.cos(angle),
+      zIndex: Math.round((0.6 + Math.cos(angle)) * 100),
+      rad: angle,
+    };
   };
 
   const currentEquipment = equipment[centerIndex];
 
   return (
     <section
-      className="min-h-screen w-full bg-gray-900 py-16 px-4 overflow-hidden touch-none"
+      className="min-h-screen w-full bg-gray-900 py-16 px-4 overflow-hidden"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="max-w-7xl mx-auto text-center text-white mb-12">
+      {/* HEADER */}
+      <div className="max-w-7xl mx-auto text-center text-white">
         <p className="text-xs text-blue-400 tracking-[0.2em] uppercase mb-3">
           НАШЕ ОБОРУДОВАНИЕ
         </p>
         <h2 className="text-3xl md:text-5xl font-semibold mb-2">
           Современная приборная база
         </h2>
-        <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
-          {totalItems} единиц высокоточного оборудования для неразрушающего контроля
+        <p className="text-gray-400 max-w-2xl mx-auto">
+          {totalItems} единиц высокоточного оборудования
         </p>
       </div>
 
-      {/* TEST VIBRATION BUTTON */}
-      <button
-        onClick={() => {
-          const result = navigator.vibrate ? navigator.vibrate(100) : false;
-          alert(`Vibration test: ${result ? 'SUCCESS' : 'FAILED'}\nUser Agent: ${navigator.userAgent}`);
-        }}
-        className="fixed top-24 left-4 z-50 bg-red-600 text-white px-4 py-2 rounded-lg text-xs md:hidden"
-      >
-        TEST VIBRATE
-      </button>
-
-      {/* 3D OVAL */}
+      {/* OVAL */}
       <div
         className="relative h-[350px] md:h-[500px] flex items-center justify-center"
         style={{ perspective: "1500px" }}
@@ -406,23 +339,9 @@ export default function EquipmentAppleDock() {
               key={item.id}
               className="absolute cursor-pointer"
               style={{ zIndex }}
-              animate={{
-                x,
-                y,
-                scale,
-                opacity,
-                z: Math.cos(rad) * 100,
-              }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 300, 
-                damping: 30,
-                mass: 0.5
-              }}
-              onClick={() => {
-                triggerHaptic();
-                setCenterIndex(index);
-              }}
+              animate={{ x, y, scale, opacity, z: Math.cos(rad) * 100 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              onClick={() => setCenterIndex(index)}
             >
               <div
                 className={`rounded-2xl overflow-hidden shadow-xl ${
@@ -430,41 +349,29 @@ export default function EquipmentAppleDock() {
                     ? isCenter ? "w-44 h-44" : "w-32 h-32"
                     : isCenter ? "w-72 h-72" : "w-56 h-56"
                 }`}
-                style={{ transformStyle: "preserve-3d" }}
               >
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="w-full h-full object-cover"
-                />
+                <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                 {isCenter && (
-                  <div className="absolute inset-0 rounded-2xl ring-4 ring-blue-500 ring-opacity-60" />
+                  <div className="absolute inset-0 ring-4 ring-blue-500 ring-opacity-60 rounded-2xl" />
                 )}
               </div>
             </motion.div>
           );
         })}
 
-        {/* NAVIGATION BUTTONS — HIDDEN ON MOBILE */}
         {!isMobile && (
           <>
-            <button
-              onClick={handlePrev}
-              className="absolute left-4 z-50 w-14 h-14 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 border border-white/20"
-            >
+            <button onClick={handlePrev} className="absolute left-4 nav-btn">
               <ChevronLeft className="w-7 h-7 text-white" />
             </button>
-            <button
-              onClick={handleNext}
-              className="absolute right-4 z-50 w-14 h-14 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 border border-white/20"
-            >
+            <button onClick={handleNext} className="absolute right-4 nav-btn">
               <ChevronRight className="w-7 h-7 text-white" />
             </button>
           </>
         )}
       </div>
 
-      {/* INFO PANEL */}
+      {/* INFO */}
       <div className="mt-10 max-w-xl mx-auto">
         <AnimatePresence mode="wait">
           <motion.div
@@ -472,23 +379,13 @@ export default function EquipmentAppleDock() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="text-center text-white bg-white/5 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/10"
+            className="bg-white/5 text-white p-6 rounded-2xl text-center"
           >
-            <h3 className="text-2xl md:text-3xl font-bold mb-2">
-              {currentEquipment.name}
-            </h3>
-
-            <p className="text-blue-400 text-base md:text-lg mb-3">
-              {currentEquipment.category}
-            </p>
-
-            <p className="text-gray-300 text-sm md:text-base mb-3">
-              {currentEquipment.description}
-            </p>
-
-            <ul className="text-gray-300 text-left list-disc list-inside text-sm md:text-base">
-              {currentEquipment.specs?.map((s, i) => (
+            <h3 className="text-2xl font-bold">{currentEquipment.name}</h3>
+            <p className="text-blue-400 mb-2">{currentEquipment.category}</p>
+            <p className="text-gray-300 mb-3">{currentEquipment.description}</p>
+            <ul className="list-disc list-inside text-left text-gray-300">
+              {currentEquipment.specs.map((s, i) => (
                 <li key={i}>{s}</li>
               ))}
             </ul>
