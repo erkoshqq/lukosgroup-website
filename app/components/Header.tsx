@@ -28,7 +28,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 w-full z-50 text-white bg-black/40 backdrop-blur-lg transition-all duration-500">
+      <header className="fixed top-0 w-full z-[9999] text-white bg-black/40 backdrop-blur-lg transition-all duration-500">
         <nav
           className={`
             max-w-7xl mx-auto px-6 py-6 flex items-center transition-all duration-500

@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+
 
 const equipment = [
 {
@@ -221,8 +222,13 @@ export default function EquipmentAppleDock() {
   const totalItems = equipment.length;
 
   const touchStartX = useRef<number | null>(null);
+  const touchStartTime = useRef<number>(0);
+  const velocity = useRef<number>(0);
+  const lastTouchX = useRef<number>(0);
+  const animationFrameId = useRef<number | null>(null);
+  const lastVibrateIndex = useRef<number>(0);
 
-  // Detect mobile once + on resize
+  // Detect mobile
   useEffect(() => {
     const detect = () => setIsMobile(window.innerWidth < 768);
     detect();
@@ -230,28 +236,146 @@ export default function EquipmentAppleDock() {
     return () => window.removeEventListener("resize", detect);
   }, []);
 
-  // Swipe controls
+  // Haptic feedback (вибрация) с улучшенной совместимостью
+  const triggerHaptic = () => {
+    // Попытка 1: Vibration API
+    if (typeof window !== 'undefined' && navigator.vibrate) {
+      try {
+        navigator.vibrate(10);
+      } catch (e) {
+        console.log('Vibration not supported');
+      }
+    }
+    
+    // Попытка 2: iOS Haptic Engine (для Safari на iPhone)
+    if (typeof window !== 'undefined' && 'ontouchstart' in window) {
+      try {
+        // @ts-ignore - iOS specific API
+        if (window.webkit?.messageHandlers?.haptic) {
+          // @ts-ignore
+          window.webkit.messageHandlers.haptic.postMessage('impact');
+        }
+      } catch (e) {
+        // Silent fail
+      }
+    }
+  };
+
+  // Improved touch controls with velocity tracking
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    lastTouchX.current = e.touches[0].clientX;
+    touchStartTime.current = Date.now();
+    velocity.current = 0;
+    
+    // Cancel any ongoing animation
+    if (animationFrameId.current) {
+      cancelAnimationFrame(animationFrameId.current);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+
+    const currentX = e.touches[0].clientX;
+    const timeDelta = Date.now() - touchStartTime.current;
+    
+    if (timeDelta > 0) {
+      velocity.current = (currentX - lastTouchX.current) / timeDelta;
+    }
+    
+    lastTouchX.current = currentX;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
 
-    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    const endX = e.changedTouches[0].clientX;
+    const deltaX = endX - touchStartX.current;
+    const timeDelta = Date.now() - touchStartTime.current;
 
-    if (Math.abs(delta) > 50) {
-      delta < 0 ? handleNext() : handlePrev();
+    // Calculate final velocity
+    const finalVelocity = velocity.current;
+
+    // Sensitivity - how much to scroll based on swipe
+    const sensitivity = 0.015; // Lower = more sensitive
+    const minSwipe = 30; // Minimum swipe distance
+    
+    // Calculate how many items to scroll
+    let itemsToScroll = 0;
+
+    if (Math.abs(deltaX) > minSwipe || Math.abs(finalVelocity) > 0.3) {
+      // Base scroll from distance
+      itemsToScroll = Math.round(deltaX * sensitivity);
+      
+      // Add velocity-based momentum (как у iPhone)
+      const momentumScroll = Math.round(finalVelocity * 15);
+      itemsToScroll += momentumScroll;
+      
+      // Clamp to reasonable values
+      itemsToScroll = Math.max(-5, Math.min(5, itemsToScroll));
+    }
+
+    if (itemsToScroll !== 0) {
+      smoothScrollToIndex(centerIndex - itemsToScroll);
     }
 
     touchStartX.current = null;
   };
 
-  const handlePrev = () =>
-    setCenterIndex((prev) => (prev - 1 + totalItems) % totalItems);
+  // Smooth scroll with haptic feedback
+  const smoothScrollToIndex = (targetIndex: number) => {
+    const normalizedTarget = ((targetIndex % totalItems) + totalItems) % totalItems;
+    const start = centerIndex;
+    const distance = normalizedTarget - start;
+    
+    // Handle wrap-around for shortest path
+    let shortestDistance = distance;
+    if (Math.abs(distance) > totalItems / 2) {
+      shortestDistance = distance > 0 
+        ? distance - totalItems 
+        : distance + totalItems;
+    }
 
-  const handleNext = () =>
+    const steps = Math.abs(shortestDistance);
+    let currentStep = 0;
+    
+    const animateStep = () => {
+      if (currentStep < steps) {
+        const direction = shortestDistance > 0 ? 1 : -1;
+        setCenterIndex((prev) => {
+          const next = (prev + direction + totalItems) % totalItems;
+          
+          // Trigger haptic on each step
+          if (next !== lastVibrateIndex.current) {
+            triggerHaptic();
+            lastVibrateIndex.current = next;
+          }
+          
+          return next;
+        });
+        
+        currentStep++;
+        
+        // Деление на 60 дает ~60fps, можно уменьшить для большей скорости
+        animationFrameId.current = window.requestAnimationFrame(() => {
+          setTimeout(animateStep, 1000 / 60);
+        });
+      }
+    };
+    
+    animateStep();
+  };
+
+  const handlePrev = () => {
+    triggerHaptic();
+    setCenterIndex((prev) => (prev - 1 + totalItems) % totalItems);
+  };
+
+  const handleNext = () => {
+    triggerHaptic();
     setCenterIndex((prev) => (prev + 1) % totalItems);
+  };
 
   // Keyboard
   useEffect(() => {
@@ -261,6 +385,15 @@ export default function EquipmentAppleDock() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Cleanup animation on unmount
+  useEffect(() => {
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+    };
   }, []);
 
   // Oval layout
@@ -294,6 +427,7 @@ export default function EquipmentAppleDock() {
     <section
       className="min-h-screen w-full bg-gray-900 py-16 px-4 overflow-hidden"
       onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
       <div className="max-w-7xl mx-auto text-center text-white mb-12">
@@ -308,7 +442,7 @@ export default function EquipmentAppleDock() {
         </p>
       </div>
 
-      {/* 3D ОВАЛ */}
+      {/* 3D OVAL */}
       <div
         className="relative h-[350px] md:h-[500px] flex items-center justify-center"
         style={{ perspective: "1500px" }}
@@ -329,8 +463,16 @@ export default function EquipmentAppleDock() {
                 opacity,
                 z: Math.cos(rad) * 100,
               }}
-              transition={{ type: "spring", stiffness: 200, damping: 30 }}
-              onClick={() => setCenterIndex(index)}
+              transition={{ 
+                type: "spring", 
+                stiffness: 250, 
+                damping: 35,
+                mass: 0.5
+              }}
+              onClick={() => {
+                triggerHaptic();
+                setCenterIndex(index);
+              }}
             >
               <div
                 className={`rounded-2xl overflow-hidden shadow-xl ${
