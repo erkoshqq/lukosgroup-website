@@ -285,6 +285,19 @@ export default function ServicesPage() {
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
 
   const scrollToService = (id: string) => {
+    // Если уже открыта другая услуга - сначала закрываем её
+    if (expandedId && expandedId !== id) {
+      setExpandedId(null);
+      // Ждём завершения анимации закрытия (400ms из exit transition)
+      setTimeout(() => {
+        performScroll(id);
+      }, 450);
+    } else {
+      performScroll(id);
+    }
+  };
+
+  const performScroll = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       const offset = 100;
@@ -296,6 +309,7 @@ export default function ServicesPage() {
         behavior: "smooth"
       });
       
+      // Открываем после скролла
       setTimeout(() => setExpandedId(id), 500);
     }
   };
