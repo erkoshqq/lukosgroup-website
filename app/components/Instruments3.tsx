@@ -221,9 +221,10 @@ export default function EquipmentAppleDock() {
   const [isMobile, setIsMobile] = useState(false);
   const totalItems = equipment.length;
 
-  const currentTouchX = useRef(0);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
   const accumulatedDelta = useRef(0);
-  const isScrolling = useRef(false);
+  const isHorizontalSwipe = useRef(false);
 
   /* Detect mobile */
   useEffect(() => {
@@ -233,35 +234,51 @@ export default function EquipmentAppleDock() {
     return () => window.removeEventListener("resize", detect);
   }, []);
 
-  /* Touch handlers */
+  /* Touch handlers - только для карусели */
   const handleTouchStart = (e: React.TouchEvent) => {
-    currentTouchX.current = e.touches[0].clientX;
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
     accumulatedDelta.current = 0;
-    isScrolling.current = true;
+    isHorizontalSwipe.current = false;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isScrolling.current) return;
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    
+    const deltaX = Math.abs(currentX - touchStartX.current);
+    const deltaY = Math.abs(currentY - touchStartY.current);
 
-    const x = e.touches[0].clientX;
-    const delta = currentTouchX.current - x;
-
-    currentTouchX.current = x;
-    accumulatedDelta.current += delta;
-
-    const threshold = 50;
-
-    if (Math.abs(accumulatedDelta.current) >= threshold) {
-      const direction = accumulatedDelta.current > 0 ? 1 : -1;
-
-      setCenterIndex((prev) => (prev + direction + totalItems) % totalItems);
-      accumulatedDelta.current = 0;
+    // Определяем направление только один раз при первом движении
+    if (!isHorizontalSwipe.current && (deltaX > 10 || deltaY > 10)) {
+      isHorizontalSwipe.current = deltaX > deltaY;
     }
+
+    // Если горизонтальный свайп - блокируем скролл и переключаем
+    if (isHorizontalSwipe.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const deltaMove = touchStartX.current - currentX;
+      accumulatedDelta.current = deltaMove;
+
+      const threshold = 50;
+
+      if (Math.abs(accumulatedDelta.current) >= threshold) {
+        const direction = accumulatedDelta.current > 0 ? 1 : -1;
+        setCenterIndex((prev) => (prev + direction + totalItems) % totalItems);
+        touchStartX.current = currentX;
+        accumulatedDelta.current = 0;
+      }
+    }
+    // Если вертикальный - ничего не делаем, позволяем скроллить
   };
 
   const handleTouchEnd = () => {
-    isScrolling.current = false;
+    touchStartX.current = 0;
+    touchStartY.current = 0;
     accumulatedDelta.current = 0;
+    isHorizontalSwipe.current = false;
   };
 
   const handlePrev = () =>
@@ -306,14 +323,9 @@ export default function EquipmentAppleDock() {
   const currentEquipment = equipment[centerIndex];
 
   return (
-    <section
-      className="min-h-screen w-full bg-gray-900 py-16 px-4 overflow-hidden"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
+    <section className="min-h-screen w-full bg-gray-900 py-16 px-4">
       {/* HEADER */}
-      <div className="max-w-7xl mx-auto text-center text-white">
+      <div className="max-w-7xl mx-auto text-center text-white mb-8">
         <p className="text-xs text-blue-400 tracking-[0.2em] uppercase mb-3">
           НАШЕ ОБОРУДОВАНИЕ
         </p>
@@ -325,10 +337,13 @@ export default function EquipmentAppleDock() {
         </p>
       </div>
 
-      {/* OVAL */}
+      {/* OVAL - только здесь обрабатываем touch */}
       <div
-        className="relative h-[350px] md:h-[500px] flex items-center justify-center"
+        className="relative h-[350px] md:h-[500px] flex items-center justify-center touch-none"
         style={{ perspective: "1500px" }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {equipment.map((item, index) => {
           const { x, y, scale, opacity, zIndex, rad } = getItemStyle(index);
@@ -337,7 +352,7 @@ export default function EquipmentAppleDock() {
           return (
             <motion.div
               key={item.id}
-              className="absolute cursor-pointer"
+              className="absolute cursor-pointer pointer-events-auto"
               style={{ zIndex }}
               animate={{ x, y, scale, opacity, z: Math.cos(rad) * 100 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -350,9 +365,14 @@ export default function EquipmentAppleDock() {
                     : isCenter ? "w-72 h-72" : "w-56 h-56"
                 }`}
               >
-                <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                <img 
+                  src={item.img} 
+                  alt={item.name} 
+                  className="w-full h-full object-cover"
+                  draggable={false}
+                />
                 {isCenter && (
-                  <div className="absolute inset-0 ring-4 ring-blue-500 ring-opacity-60 rounded-2xl" />
+                  <div className="absolute inset-0 ring-4 ring-blue-500 ring-opacity-60 rounded-2xl pointer-events-none" />
                 )}
               </div>
             </motion.div>
@@ -361,30 +381,31 @@ export default function EquipmentAppleDock() {
 
         {!isMobile && (
           <>
-            <button onClick={handlePrev} className="absolute left-4 nav-btn">
+            <button onClick={handlePrev} className="absolute left-4 z-50 w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
               <ChevronLeft className="w-7 h-7 text-white" />
             </button>
-            <button onClick={handleNext} className="absolute right-4 nav-btn">
+            <button onClick={handleNext} className="absolute right-4 z-50 w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
               <ChevronRight className="w-7 h-7 text-white" />
             </button>
           </>
         )}
       </div>
 
-      {/* INFO */}
+      {/* INFO - не блокируем touch здесь */}
       <div className="mt-10 max-w-xl mx-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentEquipment.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
             className="bg-white/5 text-white p-6 rounded-2xl text-center"
           >
-            <h3 className="text-2xl font-bold">{currentEquipment.name}</h3>
+            <h3 className="text-2xl font-bold mb-2">{currentEquipment.name}</h3>
             <p className="text-blue-400 mb-2">{currentEquipment.category}</p>
             <p className="text-gray-300 mb-3">{currentEquipment.description}</p>
-            <ul className="list-disc list-inside text-left text-gray-300">
+            <ul className="list-disc list-inside text-left text-gray-300 space-y-1">
               {currentEquipment.specs.map((s, i) => (
                 <li key={i}>{s}</li>
               ))}
@@ -392,6 +413,13 @@ export default function EquipmentAppleDock() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Hint for mobile */}
+      {isMobile && (
+        <div className="text-center mt-6 text-gray-500 text-sm">
+          Свайпайте влево/вправо для переключения
+        </div>
+      )}
     </section>
   );
 }
