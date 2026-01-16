@@ -12,15 +12,15 @@ const regions = [
   { id: "KZ-AKT", name: "Актюбинская область", projects: 178, color: "#8b5cf6" },
   { id: "KZ-ALM", name: "Алматинская область", projects: 487, color: "#ec4899" },
   { id: "KZ-ATY", name: "Атырауская область", projects: 145, color: "#06b6d4" },
-  { id: "KZ-VOS", name: "ВКО", projects: 32, color: "#6366f1" },
+  { id: "KZ-VOS", name: "Восточно-Казахстанская область", projects: 32, color: "#6366f1" },
   { id: "KZ-ZHA", name: "Жамбылская область", projects: 98, color: "#ef4444" },
-  { id: "KZ-ZAP", name: "ЗКО", projects: 123, color: "#14b8a6" },
+  { id: "KZ-ZAP", name: "Западно-Казахстанская область", projects: 123, color: "#14b8a6" },
   { id: "KZ-KAR", name: "Карагандинская область", projects: 356, color: "#a855f7" },
   { id: "KZ-KUS", name: "Костанайская область", projects: 87, color: "#f97316" },
   { id: "KZ-KZY", name: "Кызылординская область", projects: 21, color: "#84cc16" },
   { id: "KZ-MAN", name: "Мангистауская область", projects: 54, color: "#22d3ee" },
   { id: "KZ-PAV", name: "Павлодарская область", projects: 76, color: "#fb923c" },
-  { id: "KZ-SEV", name: "СКО", projects: 65, color: "#c084fc" },
+  { id: "KZ-SEV", name: "Северо-Казахстанская область", projects: 65, color: "#c084fc" },
   { id: "KZ-YUZ", name: "Туркестанская область", projects: 143, color: "#4ade80" },
 ];
 
@@ -135,98 +135,99 @@ useEffect(() => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-          {/* Interactive SVG Map */}
-          <div className="lg:col-span-2 bg-gradient-to-br from-blue-50 to-gray-50 rounded-2xl p-8 border border-gray-200">
-            <div className="relative w-full bg-white rounded-xl shadow-lg p-6">
-              {/* Tooltip */}
-              {hoveredRegion && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="absolute top-4 left-4 bg-white shadow-xl rounded-xl p-4 z-10 border-2"
-                  style={{ borderColor: hoveredRegion.color }}
-                >
-                  <p className="font-semibold text-gray-900 text-lg mb-1">
-                    {hoveredRegion.name}
-                  </p>
-                  <p className="text-3xl font-bold mb-1" style={{ color: hoveredRegion.color }}>
-                    {hoveredRegion.projects}
-                  </p>
-                  <p className="text-sm text-gray-500">проектов выполнено</p>
-                </motion.div>
-              )}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 items-start">
+  {/* Interactive SVG Map */}
+  <div className="lg:col-span-2 bg-gradient-to-br from-blue-50 to-gray-50 rounded-2xl p-4 lg:p-8 border border-gray-200">
+    <div className="relative w-full bg-white rounded-xl shadow-lg p-4 lg:p-6">
+      {/* Tooltip */}
+      {hoveredRegion && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute top-2 lg:top-4 left-2 lg:left-4 bg-white shadow-xl rounded-xl p-2 lg:p-4 z-10 border-2"
+          style={{ borderColor: hoveredRegion.color }}
+        >
+          <p className="font-semibold text-gray-900 text-sm lg:text-lg mb-1">
+            {hoveredRegion.name}
+          </p>
+          <p className="text-xl lg:text-3xl font-bold mb-1" style={{ color: hoveredRegion.color }}>
+            {hoveredRegion.projects}
+          </p>
+          <p className="text-xs lg:text-sm text-gray-500">проектов выполнено</p>
+        </motion.div>
+      )}
 
-              {/* SVG Map */}
-              {svgContent ? (
-                <div
-                  id="kz-map-container"
-                  dangerouslySetInnerHTML={{ __html: svgContent }}
-                  className="w-full [&>svg]:w-full [&>svg]:h-auto [&>svg]:max-h-[600px]"
-                />
-              ) : (
-                <div className="w-full aspect-[4/3] flex items-center justify-center">
-                  <div className="animate-pulse text-gray-400">
-                    Загрузка карты...
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Regions List */}
-          <div className="bg-gray-50 rounded-2xl p-6 max-h-[600px] overflow-y-auto">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 bg-gray-50 pb-2">
-              Все регионы ({regions.length})
-            </h3>
-            
-            <div className="space-y-2">
-              {regions
-                .sort((a, b) => b.projects - a.projects)
-                .map((region, index) => (
-                  <motion.div
-                    key={region.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.03 }}
-                    onMouseEnter={() => setHoveredRegion(region)}
-                    onMouseLeave={() => setHoveredRegion(null)}
-                    className={`p-4 rounded-xl cursor-pointer transition-all ${
-                      hoveredRegion?.id === region.id
-                        ? 'bg-blue-100 shadow-md scale-105'
-                        : 'bg-white hover:bg-gray-100'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: region.color }}
-                        />
-                        <p className="font-medium text-gray-900 text-sm">
-                          {region.name}
-                        </p>
-                      </div>
-                      <p className="text-2xl font-bold text-blue-900">
-                        {region.projects}
-                      </p>
-                    </div>
-                    
-                    {/* Progress Bar */}
-                    <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                      <motion.div
-                        className="h-full rounded-full"
-                        style={{ backgroundColor: region.color }}
-                        initial={{ width: 0 }}
-                        animate={{ width: `${(region.projects / totalProjects) * 100}%` }}
-                        transition={{ duration: 0.8, delay: index * 0.03 }}
-                      />
-                    </div>
-                  </motion.div>
-                ))}
-            </div>
+      {/* SVG Map */}
+      {svgContent ? (
+        <div
+          id="kz-map-container"
+          dangerouslySetInnerHTML={{ __html: svgContent }}
+          className="w-full [&>svg]:w-full [&>svg]:h-auto [&>svg]:max-h-[400px] sm:[&>svg]:max-h-[500px] lg:[&>svg]:max-h-[600px]"
+        />
+      ) : (
+        <div className="w-full aspect-[4/3] flex items-center justify-center">
+          <div className="animate-pulse text-gray-400">
+            Загрузка карты...
           </div>
         </div>
+      )}
+    </div>
+  </div>
+
+  {/* Regions List */}
+  <div className="bg-gray-50 rounded-2xl p-4 lg:p-6 max-h-[400px] sm:max-h-[500px] lg:max-h-[600px] overflow-y-auto">
+    <h3 className="text-base lg:text-lg font-semibold text-gray-900 mb-4 bg-gray-50 pb-2">
+      Все регионы ({regions.length})
+    </h3>
+    
+    <div className="space-y-2">
+      {regions
+        .sort((a, b) => b.projects - a.projects)
+        .map((region, index) => (
+          <motion.div
+            key={region.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.03 }}
+            onMouseEnter={() => setHoveredRegion(region)}
+            onMouseLeave={() => setHoveredRegion(null)}
+            className={`p-3 lg:p-4 rounded-xl cursor-pointer transition-all ${
+              hoveredRegion?.id === region.id
+                ? 'bg-blue-100 shadow-md scale-105'
+                : 'bg-white hover:bg-gray-100'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2 lg:gap-3">
+                <div
+                  className="w-2.5 h-2.5 lg:w-3 lg:h-3 rounded-full"
+                  style={{ backgroundColor: region.color }}
+                />
+                <p className="font-medium text-gray-900 text-xs sm:text-sm">
+                  {region.name}
+                </p>
+              </div>
+              <p className="text-xl lg:text-2xl font-bold text-blue-900">
+                {region.projects}
+              </p>
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-1.5 lg:h-2 overflow-hidden">
+              <motion.div
+                className="h-full rounded-full"
+                style={{ backgroundColor: region.color }}
+                initial={{ width: 0 }}
+                animate={{ width: `${(region.projects / totalProjects) * 100}%` }}
+                transition={{ duration: 0.8, delay: index * 0.03 }}
+              />
+            </div>
+          </motion.div>
+        ))}
+    </div>
+  </div>
+</div>
+
 
         {/* Stats Summary */}
         <motion.div
