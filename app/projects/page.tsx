@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Calendar, MapPin, Ruler, FileText, Search, Microscope, Calculator, Layers, X } from "lucide-react";
 import Image from "next/image";
+import KazakhstanMap from "./KazakhstanMap";
 
 const categories = [
   { id: "all", name: "Все проекты", icon: FileText },
@@ -238,6 +239,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
+      <KazakhstanMap/>
       {/* Filters and Search */}
       <section className="w-full bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-6">
