@@ -8,20 +8,26 @@ import { useRef } from "react";
 
 // Данные по областям (замени на реальные)
 const regions = [
-  { id: "KZ-AKM", name: "Акмолинская область", projects: 187, color: "#3b82f6" },
-  { id: "KZ-AKT", name: "Актюбинская область", projects: 178, color: "#8b5cf6" },
-  { id: "KZ-ALM", name: "Алматинская область", projects: 487, color: "#ec4899" },
-  { id: "KZ-ATY", name: "Атырауская область", projects: 145, color: "#06b6d4" },
-  { id: "KZ-VOS", name: "Восточно-Казахстанская область", projects: 32, color: "#6366f1" },
-  { id: "KZ-ZHA", name: "Жамбылская область", projects: 98, color: "#ef4444" },
-  { id: "KZ-ZAP", name: "Западно-Казахстанская область", projects: 123, color: "#14b8a6" },
-  { id: "KZ-KAR", name: "Карагандинская область", projects: 356, color: "#a855f7" },
-  { id: "KZ-KUS", name: "Костанайская область", projects: 87, color: "#f97316" },
-  { id: "KZ-KZY", name: "Кызылординская область", projects: 21, color: "#84cc16" },
-  { id: "KZ-MAN", name: "Мангистауская область", projects: 54, color: "#22d3ee" },
-  { id: "KZ-PAV", name: "Павлодарская область", projects: 76, color: "#fb923c" },
-  { id: "KZ-SEV", name: "Северо-Казахстанская область", projects: 65, color: "#c084fc" },
-  { id: "KZ-YUZ", name: "Туркестанская область", projects: 143, color: "#4ade80" },
+  { id: "KZ71", name: "Астана", projects: 200, color: "#3b82f6" },
+  { id: "KZ75", name: "Алматы", projects: 178, color: "#8b5cf6" },
+  { id: "KZ79", name: "Шымкент", projects: 487, color: "#ec4899" },
+  { id: "KZ10", name: "Абайская область", projects: 145, color: "#06b6d4" },
+  { id: "KZ11", name: "Акмолинская область", projects: 32, color: "#6366f1" },
+  { id: "KZ15", name: "Актюбинская область", projects: 98, color: "#ef4444" },
+  { id: "KZ19", name: "Алматинская область", projects: 123, color: "#14b8a6" },
+  { id: "KZ23", name: "Атырауская область", projects: 356, color: "#a855f7" },
+  { id: "KZ63", name: "Восточно-Казахстанская область", projects: 87, color: "#f97316" },
+  { id: "KZ31", name: "Жамбылская область", projects: 21, color: "#84cc16" },
+  { id: "KZ27", name: "Западно-Казахстанская область", projects: 54, color: "#22d3ee" },
+  { id: "KZ35", name: "Карагандинская область", projects: 76, color: "#fb923c" },
+  { id: "KZ39", name: "Костанайская область", projects: 65, color: "#c084fc" },
+  { id: "KZ43", name: "Кызылординская область", projects: 143, color: "#4ade80" },
+  { id: "KZ47", name: "Мангистауская область", projects: 143, color: "#4ade80" },
+  { id: "KZ55", name: "Павлодарская область", projects: 143, color: "#4ade80" },
+  { id: "KZ59", name: "Северо-Казахстанская область", projects: 143, color: "#4ade80" },
+  { id: "KZ61", name: "Туркестанская область", projects: 143, color: "#4ade80" },
+  { id: "KZ62", name: "Улытауская область", projects: 143, color: "#4ade80" },
+  { id: "KZ33", name: "Жетысуская область", projects: 143, color: "#4ade80" },
 ];
 
 
@@ -34,7 +40,7 @@ export default function KazakhstanMap() {
 
   // Загружаем SVG
   useEffect(() => {
-    fetch("/maps/kazakhstanHigh.svg")
+    fetch("/maps/kz.svg")
       .then(res => res.text())
       .then(text => {
         // Убираем фиксированные размеры, сохраняем viewBox
@@ -53,7 +59,7 @@ useEffect(() => {
   const container = document.getElementById("kz-map-container");
   if (!container) return;
 
-  const paths = container.querySelectorAll<SVGPathElement>("path[id^='KZ-']");
+  const paths = container.querySelectorAll<SVGPathElement>("path[id^='KZ']");
 
   paths.forEach((path) => {
     path.style.fill = "#CCCCCC";
@@ -66,7 +72,7 @@ useEffect(() => {
   const handleMove = (e: MouseEvent) => {
     const target = e.target as SVGPathElement;
 
-    if (target?.tagName === "path" && target.id.startsWith("KZ-")) {
+    if (target?.tagName === "path" && target.id.startsWith("KZ")) {
       const region = regions.find(r => r.id === target.id);
       setHoveredRegion(region || null);
     } else {
