@@ -83,7 +83,7 @@ export default function Home() {
       <CompletedProjects/>
       <EquipmentAppleDock/>
       <TestimonialsSlider/>
-      <ClientsMarquee/>
+      {/* <ClientsMarquee/> */}
       <CertificatesSlider/>
     </>
   );
