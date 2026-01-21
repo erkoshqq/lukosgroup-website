@@ -5,8 +5,8 @@ import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 
 const outerRing = [
-  { id: 1, name: "Магус-М", category: "Магнитопорошковый контроль", img: "/instrum/magus-m.jpg" },
-  { id: 2, name: "OmniScan MX2", category: "Ультразвуковой контроль", img: "/instrum/OmniScanMX2.jpg" },
+  { id: 1, name: "OmniScan MX2", category: "Ультразвуковой контроль", img: "/instrum/OmniScanMX2.jpg" },
+  { id: 2, name: "Магус-М", category: "Магнитопорошковый контроль", img: "/instrum/magus-m.jpg" },
   { id: 3, name: "Olympus 38DL PLUS", category: "Ультразвуковой толщиномер", img: "/instrum/Olympus38DLPLUS.jpg" },
   { id: 4, name: "MagnaFORM", category: "Вихретоковый контроль", img: "/instrum/MagnaFORM.jpg" },
   { id: 5, name: "УД2-3C", category: "Ультразвуковой дефектоскоп", img: "/instrum/ud23c.jpg" },

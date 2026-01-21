@@ -108,9 +108,9 @@ export default function CTAConsultation() {
 
             {/* Contact info */}
             <div className="mt-10 pt-10 border-t border-white/20 flex flex-wrap gap-6">
-              <a href="tel:+77082586688" className="flex items-center gap-2 text-white hover:text-blue-300 transition-colors">
+              <a href="tel:+77089537178" className="flex items-center gap-2 text-white hover:text-blue-300 transition-colors">
                 <Phone className="w-5 h-5" />
-                <span>+7 (708) 258-66-88</span>
+                <span>+7 (708) 953-71-78</span>
               </a>
               <a href="mailto:lukosgroupkz@gmail.com" className="flex items-center gap-2 text-white hover:text-blue-300 transition-colors">
                 <Mail className="w-5 h-5" />

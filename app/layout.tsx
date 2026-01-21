@@ -4,6 +4,7 @@ import SmoothScroll from "./components/SmoothScroll";
 import Footer from "./components/Footer";
 import CTAConsultation from "./components/CTAConsultation";
 import BitrixWidget from './components/BitrixWidget';
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'LUKOS GROUP - Техническое обследование зданий',
     description: 'Комплексные технические обследования и неразрушающий контроль',
-    url: 'https://lukosgroup-website.vercel.app',
+    url: 'https://lukosgroup.kz',
     siteName: 'LUKOS GROUP',
     //images: ['/og-image.jpg'],
     locale: 'ru_KZ',
@@ -40,11 +41,11 @@ export default function RootLayout({
     '@type': 'Organization',
     name: 'LUKOS GROUP',
     description: 'Техническое обследование и дефектоскопия',
-    url: 'https://lukosgroup-website.vercel.app',
-    logo: 'https://lukosgroup-website.vercel.app/logo.png',
+    url: 'https://lukosgroup.kz',
+    // logo: 'https://lukosgroup-website.vercel.app/logo.png',
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+7-708-258-66-88',
+      telephone: '+7-708-953-71-78',
       contactType: 'customer service',
       availableLanguage: ['Russian', 'Kazakh']
     },
@@ -71,6 +72,7 @@ export default function RootLayout({
         {children}
         <CTAConsultation/>
         <Footer/>
+        <Analytics />
       </body>
     </html>
   );
