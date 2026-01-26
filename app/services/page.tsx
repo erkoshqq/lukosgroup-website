@@ -280,24 +280,26 @@ const services = [
 ];
 
 export default function ServicesPage() {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+const [expandedIds, setExpandedIds] = useState<string[]>([]);
+const toggleService = (id: string) => {
+  // Переключает открыто/закрыто
+  setExpandedIds(prev => 
+    prev.includes(id) 
+      ? prev.filter(i => i !== id) 
+      : [...prev, id]
+  );
+};
 
-  const scrollToService = (id: string) => {
-    // Если уже открыта другая услуга - сначала закрываем её
-    if (expandedId && expandedId !== id) {
-      setExpandedId(null);
-      // Ждём завершения анимации закрытия (400ms из exit transition)
-      setTimeout(() => {
-        performScroll(id);
-      }, 450);
-    } else {
-      performScroll(id);
-    }
-  };
-
-  const performScroll = (id: string) => {
+const scrollToService = (id: string) => {
+  // ВСЕГДА открываем (даже если уже открыта)
+  if (!expandedIds.includes(id)) {
+    setExpandedIds(prev => [...prev, id]);
+  }
+  
+  // Скроллим к услуге
+  setTimeout(() => {
     const element = document.getElementById(id);
     if (element) {
       const offset = 100;
@@ -308,11 +310,9 @@ export default function ServicesPage() {
         top: offsetPosition,
         behavior: "smooth"
       });
-      
-      // Открываем после скролла
-      setTimeout(() => setExpandedId(id), 500);
     }
-  };
+  }, 50);
+};
 
   const openLightbox = (image: string, index: number = 0) => {
     setLightboxImage(image);
@@ -381,7 +381,7 @@ export default function ServicesPage() {
         <div className="max-w-5xl mx-auto space-y-6">
           {services.map((service, index) => {
             const Icon = service.icon;
-            const isExpanded = expandedId === service.id;
+            const isExpanded = expandedIds.includes(service.id);
 
             return (
               <motion.div
@@ -395,7 +395,7 @@ export default function ServicesPage() {
               >
                 {/* Header - Always Visible */}
                 <div
-                  onClick={() => setExpandedId(isExpanded ? null : service.id)}
+                  onClick={() => toggleService(service.id)} 
                   className="p-8 cursor-pointer"
                 >
                   <div className="flex items-start gap-6">
