@@ -65,6 +65,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <meta name="yandex-verification" content="c48008d0d9d66101" />
       </head>
       <body>
         <SmoothScroll/>
