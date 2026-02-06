@@ -27,7 +27,6 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'your-google-verification-code',
-    yandex: '6e9896d18cbbef35'
   }
 };
 
@@ -65,7 +64,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <meta name="yandex-verification" content="6e9896d18cbbef35" />
       </head>
       <body>
         <SmoothScroll/>
