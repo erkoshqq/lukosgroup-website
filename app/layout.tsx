@@ -26,7 +26,8 @@ export const metadata: Metadata = {
     follow: true,
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: '68842502712a1169',
+    yandex: 'c48008d0d9d66101',
   }
 };
 
