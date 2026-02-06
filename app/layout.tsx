@@ -64,6 +64,8 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Мета-тег для подтверждения Яндекса */}
+        <meta name="yandex-verification" content="c48008d0d9d66101" />
       </head>
       <body>
         <SmoothScroll/>
