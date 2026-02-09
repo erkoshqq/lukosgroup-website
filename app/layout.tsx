@@ -8,7 +8,7 @@ import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'LUKOS GROUP - Техническое обследование и дефектоскопия',
+  title: 'LUKOSGROUP - Техническое обследование и дефектоскопия в Караганде',
   description: 'Группа компаний LUKOS GROUP специализируется на техническом обследовании зданий, дефектоскопии и неразрушающем контроле. 3300+ объектов, 26 экспертов, 7 лет опыта.',
   keywords: 'техническое обследование, дефектоскопия, неразрушающий контроль, обследование зданий, Караганда, Казахстан, НК, испытания материалов',
   authors: [{ name: 'LUKOS GROUP' }],
