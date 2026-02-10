@@ -91,10 +91,13 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Телефон</h3>
-                    <a href="tel:+77001234567" className="text-gray-600 hover:text-blue-900 transition-colors block">
+                    <a href="tel:+77089537178" className="text-gray-600 hover:text-blue-900 transition-colors block">
+                      +7 (708) 953-71-78 
+                    </a>
+                    <a href="tel:+77082586688" className="text-gray-600 hover:text-blue-900 transition-colors block">
                       +7 (708) 258-66-88
                     </a>
-                    <a href="tel:+77007654321" className="text-gray-600 hover:text-blue-900 transition-colors block">
+                    <a href="tel:+77763570572" className="text-gray-600 hover:text-blue-900 transition-colors block">
                       +7 (776) 357-05-72
                     </a>
                   </div>
