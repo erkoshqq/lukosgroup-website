@@ -4,6 +4,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { ChevronDown, Check, FileText, Search, Microscope, Calculator, Layers, X, CameraIcon } from "lucide-react";
 
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Услуги - Техническое обследование, Дефектоскопия, НК | LUKOS GROUP',
+  description: 'Полный спектр услуг: техническое обследование зданий, дефектоскопия металлоконструкций, лабораторные испытания, геодезическая съемка, поверочный расчёт, геологические изыскания.',
+  keywords: 'услуги технического обследования, дефектоскопия услуги, неразрушающий контроль цена, обследование зданий стоимость, лабораторные испытания',
+  openGraph: {
+    title: 'Услуги LUKOS GROUP - Полный цикл обследования',
+    description: 'Техническое обследование, дефектоскопия, лабораторные испытания, геодезия',
+    url: 'https://lukosgroup.kz/services',
+    siteName: 'LUKOS GROUP',
+    locale: 'ru_KZ',
+    type: 'website',
+  },
+};
+
 const services = [
   {
     id: "technical-inspection",

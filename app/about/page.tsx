@@ -5,6 +5,22 @@ import { Building2, Target, MapPin, TrendingUp, Shield, Search, Microscope, File
 import { useState, useRef } from "react";
 import Image from "next/image";
 
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'О компании LUKOS GROUP - 7 лет опыта в техническом обследовании',
+  description: 'LUKOS GROUP - лидер в области технического обследования зданий в Казахстане. 7 лет опыта, 3300+ объектов, собственная лаборатория, команда из 26 экспертов.',
+  keywords: 'о компании lukos, техническое обследование караганда, лаборатория неразрушающего контроля, аттестованные эксперты',
+  openGraph: {
+    title: 'О компании LUKOS GROUP',
+    description: '7 лет опыта, 3300+ объектов, 26 экспертов',
+    url: 'https://lukosgroup.kz/about',
+    siteName: 'LUKOS GROUP',
+    locale: 'ru_KZ',
+    type: 'website',
+  },
+};
+
 export default function AboutPageHero() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);

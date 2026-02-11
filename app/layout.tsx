@@ -8,19 +8,11 @@ import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'LUKOSGROUP - Техническое обследование и дефектоскопия в Караганде',
-  description: 'Группа компаний LUKOS GROUP специализируется на техническом обследовании зданий, дефектоскопии и неразрушающем контроле. 3300+ объектов, 26 экспертов, 7 лет опыта.',
-  keywords: 'техническое обследование, дефектоскопия, неразрушающий контроль, обследование зданий, Караганда, Казахстан, НК, испытания материалов',
+  // Оставьте только fallback title (если страница не установит свой)
+  metadataBase: new URL('https://lukosgroup.kz'),
+  
+  // Общие для всех страниц
   authors: [{ name: 'LUKOS GROUP' }],
-  openGraph: {
-    title: 'LUKOS GROUP - Техническое обследование зданий',
-    description: 'Комплексные технические обследования и неразрушающий контроль',
-    url: 'https://lukosgroup.kz',
-    siteName: 'LUKOS GROUP',
-    //images: ['/og-image.jpg'],
-    locale: 'ru_KZ',
-    type: 'website',
-  },
   robots: {
     index: true,
     follow: true,
@@ -31,19 +23,13 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  // JSON-LD структурированные данные
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'LUKOS GROUP',
     description: 'Техническое обследование и дефектоскопия',
     url: 'https://lukosgroup.kz',
-    // logo: 'https://lukosgroup-website.vercel.app/logo.png',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+7-708-953-71-78',
@@ -53,7 +39,8 @@ export default function RootLayout({
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'KZ',
-      addressLocality: 'Караганда, район им. Казыбек би ул. Орлова, стр. 113/2'
+      addressLocality: 'Караганда',
+      streetAddress: 'район им. Казыбек би ул. Орлова, стр. 113/2'
     }
   };
 
