@@ -112,6 +112,14 @@ export default function CTAConsultation() {
                 <Phone className="w-5 h-5" />
                 <span>+7 (708) 953-71-78</span>
               </a>
+              <a href="tel:+77752759919" className="flex items-center gap-2 text-white hover:text-blue-300 transition-colors">
+                <Phone className="w-5 h-5" />
+                <span>+7 (775) 275-99-19</span>
+              </a>
+              <a href="tel:+77782649243" className="flex items-center gap-2 text-white hover:text-blue-300 transition-colors">
+                <Phone className="w-5 h-5" />
+                <span>+7 (778) 264-92-43</span>
+              </a>
               <a href="mailto:lukosgroupkz@gmail.com" className="flex items-center gap-2 text-white hover:text-blue-300 transition-colors">
                 <Mail className="w-5 h-5" />
                 <span>lukosgroupkz@gmail.com</span>
