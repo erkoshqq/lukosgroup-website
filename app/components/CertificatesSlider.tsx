@@ -96,6 +96,8 @@ export default function CertificatesSlider() {
                       src={cert.image}
                       alt={cert.title}
                       fill
+                      sizes="288px"              // ← реальная ширина карточки (w-72 = 288px)
+                      priority={index < 3}       // ← первые 3 грузятся сразу
                       className="object-cover"
                     />
                     
@@ -147,6 +149,7 @@ export default function CertificatesSlider() {
               src={selectedImage}
               alt="Certificate"
               fill
+              sizes="100vw"
               className="object-contain"
               onClick={(e) => e.stopPropagation()}
             />
