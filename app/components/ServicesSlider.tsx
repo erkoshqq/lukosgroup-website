@@ -85,7 +85,7 @@ export default function ServicesGrid() {
             return (
               <motion.a
                 key={service.id}
-                href="/services"
+                href={`/services/${service.id}`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
