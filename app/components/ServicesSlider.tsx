@@ -5,7 +5,7 @@ import { Building2, Search, Microscope, Calculator, Layers, CameraIcon } from "l
 
 const services = [
   {
-    id: 1,
+    id: "technical-inspection",
     title: "Техническое обследование",
     description: "Комплексная оценка состояния здания с выявлением дефектов и определением возможности безопасной эксплуатации",
     icon: Building2,
@@ -14,7 +14,7 @@ const services = [
   },
   {
     id: 2,
-    title: "Дефектоскопия",
+    title: "defectoscopy",
     description: "Выявление скрытых дефектов неразрушающими методами контроля с точностью до 99.4%",
     icon: Search,
     stats: { value: "9", label: "методик НК" },
@@ -22,7 +22,7 @@ const services = [
   },
   {
     id: 3,
-    title: "Лабораторные испытания",
+    title: "laboratory-tests",
     description: "Определение физико-механических характеристик материалов в аккредитованной лаборатории",
     icon: Microscope,
     stats: { value: "100%", label: "точность" },
@@ -30,7 +30,7 @@ const services = [
   },
   {
     id: 4,
-    title: "Геодезическая съемка",
+    title: "geodetic-survey",
     description: "Высокоточные измерения деформаций, осадок и геометрии сооружений",
     icon: CameraIcon,
     stats: { value: "±1мм", label: "точность" },
@@ -38,7 +38,7 @@ const services = [
   },
   {
     id: 5,
-    title: "Поверочный расчёт",
+    title: "verification-calculation",
     description: "Моделирование нагрузок и расчет несущей способности в ЛИРА САПР и SCAD",
     icon: Calculator,
     stats: { value: "3D", label: "моделирование" },
@@ -46,7 +46,7 @@ const services = [
   },
   {
     id: 6,
-    title: "Геологические изыскания",
+    title: "geological-survey",
     description: "Исследование грунтовых условий с рекомендациями по укреплению фундамента",
     icon: Layers,
     stats: { value: "30м", label: "глубина" },
