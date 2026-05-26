@@ -13,40 +13,40 @@ const services = [
     color: "from-blue-600 to-blue-800"
   },
   {
-    id: 2,
-    title: "defectoscopy",
+    id: "defectoscopy",
+    title: "Дефектоскопия",
     description: "Выявление скрытых дефектов неразрушающими методами контроля с точностью до 99.4%",
     icon: Search,
     stats: { value: "9", label: "методик НК" },
     color: "from-indigo-600 to-indigo-800"
   },
   {
-    id: 3,
-    title: "laboratory-tests",
+    id: "laboratory-tests",
+    title: "Лабораторные испытания",
     description: "Определение физико-механических характеристик материалов в аккредитованной лаборатории",
     icon: Microscope,
     stats: { value: "100%", label: "точность" },
     color: "from-violet-600 to-violet-800"
   },
   {
-    id: 4,
-    title: "geodetic-survey",
+    id: "geodetic-survey",
+    title: "Геодезическая съемка",
     description: "Высокоточные измерения деформаций, осадок и геометрии сооружений",
     icon: CameraIcon,
     stats: { value: "±1мм", label: "точность" },
     color: "from-purple-600 to-purple-800"
   },
   {
-    id: 5,
-    title: "verification-calculation",
+    id: "verification-calculation",
+    title: "Поверочный расчет",
     description: "Моделирование нагрузок и расчет несущей способности в ЛИРА САПР и SCAD",
     icon: Calculator,
     stats: { value: "3D", label: "моделирование" },
     color: "from-fuchsia-600 to-fuchsia-800"
   },
   {
-    id: 6,
-    title: "geological-survey",
+    id: "geological-survey",
+    title: "Геологические изыскания",
     description: "Исследование грунтовых условий с рекомендациями по укреплению фундамента",
     icon: Layers,
     stats: { value: "30м", label: "глубина" },

@@ -9,6 +9,7 @@ import TestimonialsSlider from "./components/TestimonialsSlider";
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import dynamic from 'next/dynamic';
+import Link from 'next/link'
 
 // Замени обычный импорт на динамический
 // const EquipmentDoubleRing = dynamic(
@@ -125,12 +126,12 @@ export default function HomePage() {
               Получить консультацию
             </a>
 
-            <a
+            <Link
               href="/services"
               className="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors text-base"
             >
               Наши услуги →
-            </a>
+            </Link>
           </motion.div>
         </div>
       </section>
