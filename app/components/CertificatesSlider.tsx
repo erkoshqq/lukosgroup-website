@@ -10,9 +10,7 @@ const certificates = [
   { id: 1, image: "/certificates/1.jpg", title: "Сертификат 1" },
   { id: 2, image: "/certificates/2.jpg", title: "Сертификат 2" },
   { id: 3, image: "/certificates/3.jpg", title: "Сертификат 3" },
-  { id: 4, image: "/certificates/4.jpg", title: "Сертификат 4" },
   { id: 5, image: "/certificates/5.jpg", title: "Сертификат 5" },
-  { id: 6, image: "/certificates/6.jpg", title: "Сертификат 6" },
   { id: 7, image: "/certificates/7.jpg", title: "Сертификат 7" },
   { id: 8, image: "/certificates/8.jpg", title: "Сертификат 8" },
 ];
@@ -33,7 +31,7 @@ export default function CertificatesSlider() {
 
   return (
     <>
-      <section className="w-full bg-gray-50 py-20 px-6 overflow-hidden">
+      <section className="w-full bg-gray-50 py-20 px-6 overflow-hidden border-t border-gray-200">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <motion.div

@@ -11,7 +11,7 @@ export default function AboutIntro() {
   const [startCount, setStartCount] = useState(false);
 
   return (
-    <section className="min-h-screen w-full bg-gradient-to-b from-gray-300 via-white to-gray-300 py-20 md:py-32 px-6">
+    <section className="min-h-screen w-full bg-white py-20 md:py-32 px-6">
       <div className="max-w-7xl mx-auto">
         {/* TOP LABEL */}
         <div className="mb-8 md:mb-10">
@@ -67,7 +67,7 @@ export default function AboutIntro() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           onViewportEnter={() => setStartCount(true)}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 pb-20"
         >
           {/* CARD 1 */}
           <motion.div
@@ -156,7 +156,7 @@ export default function AboutIntro() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-32 pt-20 border-t border-gray-200"
+          className="pt-20 border-t border-gray-200"
         >
           {/* Header */}
           <div className="text-center mb-16">
