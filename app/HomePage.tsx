@@ -4,8 +4,8 @@ import AboutIntro from "./components/AboutIntro";
 import ServicesSlider from "./components/ServicesSlider";
 import CompletedProjects from "./components/CompletedProjects";
 import ClientsMarquee from "./components/ClientsMarquee";
-import CertificatesSlider from "./components/CertificatesSlider";
-import TestimonialsSlider from "./components/TestimonialsSlider";
+// import CertificatesSlider from "./components/CertificatesSlider";
+// import TestimonialsSlider from "./components/TestimonialsSlider";
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import dynamic from 'next/dynamic';
@@ -144,7 +144,7 @@ export default function HomePage() {
       <EquipmentAppleDock/>
       {/* <TestimonialsSlider/> */}
       <ClientsMarquee/>
-      <CertificatesSlider/>
+      {/* <CertificatesSlider/> */}
     </>
   );
 }

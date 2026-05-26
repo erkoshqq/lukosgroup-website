@@ -1,5 +1,7 @@
 "use client";
 
+import CertificatesSlider from "./CertificatesSlider";
+
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import { useState } from "react";
@@ -144,6 +146,9 @@ export default function AboutIntro() {
             <p className="text-base md:text-lg text-gray-600">экспертов в команде</p>
           </motion.div>
         </motion.div>
+
+        {/* CERTIFICATES */}
+        <CertificatesSlider />
 
         {/* ПОЧЕМУ МЫ / ЦЕННОСТИ */}
         <motion.div
