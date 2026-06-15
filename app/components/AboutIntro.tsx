@@ -164,7 +164,7 @@ export default function AboutIntro() {
               ПОЧЕМУ МЫ
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-900 mb-6">
-              Наши ценности
+              Наши принципы
             </h2>
             <p className="text-gray-600 text-base md:text-lg max-w-3xl mx-auto">
               Мы обеспечиваем безопасность и долговечность зданий и сооружений, предлагая объективные, 
