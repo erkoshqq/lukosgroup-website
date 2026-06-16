@@ -129,48 +129,57 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Правая часть — сетка фото */}
+            {/* Правая часть — сетка 5 фото как на макете */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.9, delay: 0.4 }}
               className="hidden lg:flex flex-col gap-3"
             >
-              {/* Верхний ряд — левое шире */}
-              <div className="grid gap-3" style={{ gridTemplateColumns: '55fr 45fr' }}>
-                <div className="relative overflow-hidden rounded-2xl bg-gray-800 aspect-[4/3]">
-                  <img
-                    src="/images/photo1.jpg"
-                    alt="Здание"
-                    className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                </div>
-                <div className="relative overflow-hidden rounded-2xl bg-gray-800 aspect-[4/3]">
-                  <img
-                    src="/images/nuray1.jpg"
-                    alt="Конструкции"
-                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                </div>
-              </div>
-
-              {/* Нижний ряд — 3 равных */}
-              <div className="grid grid-cols-3 gap-3">
+              {/* Верхний ряд — левая шире правой */}
+              <div className="grid gap-3 h-52 xl:h-60" style={{ gridTemplateColumns: '3fr 2fr' }}>
                 {[
-                  { src: "/images/nursipribor.jpg", alt: "Колонны", pos: "object-center" },
-                  { src: "/images/spina2.jpg",      alt: "Дефектоскоп", pos: "object-center" },
-                  { src: "/images/photo1.jpg",      alt: "Мост", pos: "object-center" },
+                  { src: "/images/building_corner.png", alt: "Здание" },
+                  { src: "/images/storage.png", alt: "Металлоконструкции" },
                 ].map((img, i) => (
-                  <div key={i} className="relative overflow-hidden rounded-2xl bg-gray-800 aspect-[4/3]">
+                  <motion.div
+                    key={img.src}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.55 + i * 0.1 }}
+                    className="relative overflow-hidden rounded-2xl bg-gray-800"
+                  >
                     <img
                       src={img.src}
                       alt={img.alt}
-                      className={`w-full h-full object-cover ${img.pos} hover:scale-105 transition-transform duration-500`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                  </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Нижний ряд — 3 фото */}
+              <div className="grid grid-cols-3 gap-3 h-40 xl:h-48">
+                {[
+                  { src: "/images/laser.png", alt: "Колонны" },
+                  { src: "/images/meter.png", alt: "Дефектоскоп" },
+                  { src: "/images/bridge.png", alt: "Мост" },
+                ].map((img, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.75 + i * 0.1 }}
+                    className="relative overflow-hidden rounded-2xl bg-gray-800"
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
