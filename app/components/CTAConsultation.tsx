@@ -120,9 +120,9 @@ export default function CTAConsultation() {
                 <Phone className="w-5 h-5" />
                 <span>+7 (778) 264-92-43</span>
               </a>
-              <a href="mailto:lukosgroupkz@gmail.com" className="flex items-center gap-2 text-white hover:text-blue-300 transition-colors">
+              <a href="mailto:info@lukosgroup.kz" className="flex items-center gap-2 text-white hover:text-blue-300 transition-colors">
                 <Mail className="w-5 h-5" />
-                <span>lukosgroupkz@gmail.com</span>
+                <span>info@lukosgroup.kz</span>
               </a>
             </div>
           </motion.div>

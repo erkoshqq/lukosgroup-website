@@ -112,8 +112,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
-                    <a href="mailto:lukosgroupkz@gmail.com" className="text-gray-600 hover:text-blue-900 transition-colors">
-                      lukosgroupkz@gmail.com
+                    <a href="mailto:info@lukosgroup.kz" className="text-gray-600 hover:text-blue-900 transition-colors">
+                      info@lukosgroup.kz
                     </a>
                   </div>
                 </div>
