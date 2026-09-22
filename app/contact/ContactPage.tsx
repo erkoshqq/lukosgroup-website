@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Phone, Mail, MapPin, Clock, Send, User, MessageSquare } from "lucide-react";
+import Image from "next/image";
 
 
 
@@ -41,7 +42,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] w-full bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900 flex items-center">
+      <section className="relative min-h-[50vh] w-full bg-linear-to-br from-blue-900 via-blue-800 to-gray-900 flex items-center">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -88,7 +89,7 @@ export default function ContactPage() {
               <div className="space-y-6 mb-12">
                 {/* Phone */}
                 <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
                     <Phone className="w-6 h-6 text-blue-900" />
                   </div>
                   <div>
@@ -107,7 +108,7 @@ export default function ContactPage() {
 
                 {/* Email */}
                 <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
                     <Mail className="w-6 h-6 text-blue-900" />
                   </div>
                   <div>
@@ -120,7 +121,7 @@ export default function ContactPage() {
 
                 {/* Address */}
                 <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
                     <MapPin className="w-6 h-6 text-blue-900" />
                   </div>
                   <div>
@@ -134,7 +135,7 @@ export default function ContactPage() {
 
                 {/* Working Hours */}
                 <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
                     <Clock className="w-6 h-6 text-blue-900" />
                   </div>
                   <div>
@@ -149,12 +150,13 @@ export default function ContactPage() {
 
               {/* Office Photo */}
               <div className="relative h-64 rounded-2xl overflow-hidden shadow-xl">
-                <img 
-                  src="/images/office.png" 
+                <Image
+                  src="/images/office.png"
                   alt="Офис Lukos Group"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 text-white">
                   <p className="text-sm font-medium">Наш офис</p>
                 </div>

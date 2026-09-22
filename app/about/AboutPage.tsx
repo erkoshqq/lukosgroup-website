@@ -35,10 +35,10 @@ export default function AboutPageHero() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-screen w-full bg-gradient-to-b from-gray-800 to-gray-900 flex items-center">
+      <section className="relative min-h-screen w-full bg-linear-to-b from-gray-800 to-gray-900 flex items-center">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/90 to-gray-900/70 z-10"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-gray-900/90 to-gray-900/70 z-10"></div>
           {/* Placeholder for background image */}
           <div className="w-full h-full bg-gray-800"></div>
         </div>
@@ -179,12 +179,13 @@ export default function AboutPageHero() {
 
               {/* Image Placeholder - Team Photo */}
               <div className="mt-8 relative h-80 rounded-2xl overflow-hidden shadow-xl">
-                <img 
+                <Image 
                   src="/images/spina.jpg" 
                   alt="Команда Lukos Group на объекте"
+                  fill
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 text-white">
                   <p className="text-sm font-medium">Наша команда на объекте</p>
                 </div>
@@ -211,7 +212,7 @@ export default function AboutPageHero() {
               {/* Geography */}
               <div className="bg-gray-50 p-8 rounded-2xl border border-gray-200">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
                     <MapPin className="w-6 h-6 text-blue-900" />
                   </div>
                   <div>
@@ -227,7 +228,7 @@ export default function AboutPageHero() {
               {/* Mobile Labs */}
               <div className="bg-gray-50 p-8 rounded-2xl border border-gray-200">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
                     <Building2 className="w-6 h-6 text-blue-900" />
                   </div>
                   <div>
@@ -242,12 +243,13 @@ export default function AboutPageHero() {
 
               {/* Image Placeholder - Equipment */}
               <div className="relative h-64 rounded-2xl overflow-hidden shadow-xl">
-                <img 
+                <Image 
                   src="/images/random1.jpg" 
                   alt="Лаборатория и оборудование"
+                  fill
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 text-white">
                   <p className="text-sm font-medium">Современное оборудование</p>
                 </div>
@@ -362,36 +364,38 @@ export default function AboutPageHero() {
             className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6"
           >
             <div className="relative h-72 rounded-2xl overflow-hidden shadow-lg">
-              <img 
+              <Image 
                 src="/images/spinairuletka.jpg" 
                 alt="Процесс обследования"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
               <div className="absolute bottom-6 left-6 text-white">
                 <p className="text-sm font-medium">Инструментальное обследование</p>
               </div>
             </div>
 
             <div className="relative h-72 rounded-2xl overflow-hidden shadow-lg">
-              <img 
+              <Image 
                 src="/images/nursipribor.jpg" 
                 alt="Лабораторные испытания"
+                fill
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
               <div className="absolute bottom-6 left-6 text-white">
                 <p className="text-sm font-medium">Лабораторные испытания</p>
               </div>
             </div>
 
             <div className="relative h-72 rounded-2xl overflow-hidden shadow-lg">
-              <img 
+              <Image 
                 src="/images/spinaipribor.jpg" 
                 alt="Работа на объекте"
+                fill
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
               <div className="absolute bottom-6 left-6 text-white">
                 <p className="text-sm font-medium">Работа на объекте</p>
               </div>
@@ -431,44 +435,50 @@ export default function AboutPageHero() {
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-1 items-center"
           >
             <div className="flex items-center justify-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors grayscale hover:grayscale-0">
-              <img 
+              <Image 
                 src="/clients/kazmunaygaz.webp" 
                 alt="АО НК КазМунайГаз"
+                fill
                 className="max-w-full h-16 object-contain"
               />
             </div>
             <div className="flex items-center justify-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors grayscale hover:grayscale-0">
-              <img 
+              <Image 
                 src="/clients/kaztransoil.png" 
                 alt="АО КазТрансОйл"
+                fill
                 className="max-w-full h-16 object-contain"
               />
             </div>
             <div className="flex items-center justify-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors grayscale hover:grayscale-0">
-              <img 
+              <Image 
                 src="/clients/kazakhmys.png" 
                 alt="Kazakhmys"
+                fill
                 className="max-w-full h-16 object-contain"
               />
             </div>
             <div className="flex items-center justify-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors grayscale hover:grayscale-0">
-              <img 
+              <Image 
                 src="/clients/kazchrome.jpg" 
                 alt="Kazchrome"
+                fill
                 className="max-w-full h-16 object-contain"
               />
             </div>
             <div className="flex items-center justify-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors grayscale hover:grayscale-0">
-              <img 
+              <Image 
                 src="/clients/temirzholy.avif" 
                 alt="Қазақстан темір жолы"
+                fill
                 className="max-w-full h-16 object-contain"
               />
             </div>
             <div className="flex items-center justify-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors grayscale hover:grayscale-0">
-              <img 
+              <Image 
                 src="/clients/bogatyr.webp" 
                 alt="Богатырь комир"
+                fill
                 className="max-w-full h-16 object-contain"
               />
             </div>
@@ -532,8 +542,8 @@ export default function AboutPageHero() {
             </button>
 
             {/* Gradient overlays */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-linear-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
 
             {/* Scrollable Container */}
             <div
@@ -548,7 +558,7 @@ export default function AboutPageHero() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="flex-shrink-0 w-80 md:w-96 group/card cursor-pointer"
+                  className="shrink-0 w-80 md:w-96 group/card cursor-pointer"
                   onClick={() => setSelectedImage(photo.image)}
                 >
                   <div className="relative h-80 bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group-hover/card:scale-[1.02]">
@@ -560,7 +570,7 @@ export default function AboutPageHero() {
                     />
                     
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 group-hover/card:opacity-100 transition-all duration-300">
+                    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-100 group-hover/card:opacity-100 transition-all duration-300">
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
                         <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
                           <ZoomIn className="w-6 h-6 text-blue-900" />
