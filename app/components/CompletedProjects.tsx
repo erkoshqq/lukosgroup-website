@@ -134,7 +134,7 @@ export default function ProjectsSection() {
           className="mt-12 text-center"
         >
           <a
-            href="/projects"
+            href="/engineering/projects"
             className="inline-flex items-center gap-2 text-blue-900 font-semibold text-base hover:gap-3 transition-all"
           >
             Все проекты

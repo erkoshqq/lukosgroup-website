@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { brands, type BrandKey } from "./brands";
 
-export default function Footer() {
+export default function Footer({ brand }: { brand: BrandKey }) {
+  const config = brands[brand];
   const currentYear = new Date().getFullYear();
 
   return (
@@ -66,26 +68,13 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold text-lg mb-6">Компания</h3>
             <ul className="space-y-3">
-              <li>
-                <Link href="/about" className="hover:text-white transition-colors text-sm">
-                  О нас
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-white transition-colors text-sm">
-                  Услуги
-                </Link>
-              </li>
-              <li>
-                <Link href="/projects" className="hover:text-white transition-colors text-sm">
-                  Проекты
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-white transition-colors text-sm">
-                  Контакты
-                </Link>
-              </li>
+              {config.footerCompanyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="hover:text-white transition-colors text-sm">
+                    {link.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -93,36 +82,13 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold text-lg mb-6">Услуги</h3>
             <ul className="space-y-3">
-              <li>
-                <Link href="/services#technical" className="hover:text-white transition-colors text-sm">
-                  Техническое обследование
-                </Link>
-              </li>
-              <li>
-                <Link href="/services#defectoscopy" className="hover:text-white transition-colors text-sm">
-                  Дефектоскопия
-                </Link>
-              </li>
-              <li>
-                <Link href="/services#laboratory" className="hover:text-white transition-colors text-sm">
-                  Лабораторные испытания
-                </Link>
-              </li>
-              <li>
-                <Link href="/services#geodetic" className="hover:text-white transition-colors text-sm">
-                  Геодезическая съемка
-                </Link>
-              </li>
-                <li>
-                <Link href="/services#geodetic" className="hover:text-white transition-colors text-sm">
-                  Поверочный расчет
-                </Link>
-              </li>
-                <li>
-                <Link href="/services#geodetic" className="hover:text-white transition-colors text-sm">
-                  Геологические изыскания
-                </Link>
-              </li>
+              {config.footerServiceLinks.map((link) => (
+                <li key={link.title + link.href}>
+                  <Link href={link.href} className="hover:text-white transition-colors text-sm">
+                    {link.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

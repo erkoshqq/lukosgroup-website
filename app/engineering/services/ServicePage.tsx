@@ -336,7 +336,7 @@ const scrollToService = (id: string) => {
               Свяжитесь с нами для консультации — мы подберем оптимальное решение для вашего объекта
             </p>
             <a
-              href="/contact"
+              href="/engineering/contact"
               className="inline-flex items-center gap-2 px-8 py-4 bg-blue-900 text-white font-semibold rounded-lg hover:bg-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Получить консультацию

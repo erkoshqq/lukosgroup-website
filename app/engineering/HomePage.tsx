@@ -1,15 +1,15 @@
 "use client";
 
-import AboutIntro from "./components/AboutIntro";
-import ServicesSlider from "./components/ServicesSlider";
-import CompletedProjects from "./components/CompletedProjects";
-import ClientsMarquee from "./components/ClientsMarquee";
+import AboutIntro from "../components/AboutIntro";
+import ServicesSlider from "../components/ServicesSlider";
+import CompletedProjects from "../components/CompletedProjects";
+import ClientsMarquee from "../components/ClientsMarquee";
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import dynamic from 'next/dynamic';
 
 const EquipmentAppleDock = dynamic(
-  () => import('./components/Instruments3'),
+  () => import('../components/Instruments3'),
   { ssr: false }
 );
 
@@ -111,7 +111,7 @@ export default function HomePage() {
                 className="flex flex-col sm:flex-row gap-3"
               >
                 
-                <a href="/request"
+                <a href="/engineering/request"
                   className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg transition-colors text-sm md:text-base"
                 >
                   Получить консультацию

@@ -44,9 +44,9 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 w-full">
           {/* Хлебные крошки */}
           <div className="flex items-center gap-2 text-blue-300 text-sm mb-8">
-            <Link href="/" className="hover:text-white transition-colors">Главная</Link>
+            <Link href="/engineering" className="hover:text-white transition-colors">Главная</Link>
             <span>/</span>
-            <Link href="/services" className="hover:text-white transition-colors">Услуги</Link>
+            <Link href="/engineering/services" className="hover:text-white transition-colors">Услуги</Link>
             <span>/</span>
             <span className="text-white">{service.title}</span>
           </div>
@@ -151,7 +151,7 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
             className="flex flex-col sm:flex-row gap-4 pt-4"
           >
             <Link
-              href="/services"
+              href="/engineering/services"
               className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <ArrowLeft size={18} />

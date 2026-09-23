@@ -52,7 +52,7 @@ export default function AboutIntro() {
             </p>
 
             <a
-              href="/about"
+              href="/engineering/about"
               className="inline-flex items-center gap-2 px-6 py-3 border-2 border-blue-900 text-blue-900 font-medium text-sm tracking-wide hover:bg-blue-900 hover:text-white transition-all duration-300 rounded-md w-fit"
             >
               БОЛЬШЕ О КОМПАНИИ
