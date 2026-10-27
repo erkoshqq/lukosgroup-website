@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Контакты LUKOS GROUP',
     description: 'Караганда, ул. Орлова 113/2. Телефон: +7 (708) 953-71-78',
-    url: 'https://lukosgroup.kz/contact',
+    url: 'https://lukosgroup.kz/engineering/contact',
     siteName: 'LUKOS GROUP',
     locale: 'ru_KZ',
     type: 'website',

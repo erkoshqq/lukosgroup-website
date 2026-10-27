@@ -200,7 +200,7 @@ export default function ProjectsPage() {
           }}></div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 w-full">
+        <div className="relative z-10 max-w-[1600px] mx-auto px-6 py-24 w-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -209,7 +209,7 @@ export default function ProjectsPage() {
             <p className="text-blue-300 text-sm tracking-[0.2em] uppercase mb-6">
               НАШИ ПРОЕКТЫ
             </p>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight max-w-4xl">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight max-w-[1100px]">
               Реализованные проекты
             </h1>
             <p className="text-xl text-gray-300 mb-12 max-w-3xl leading-relaxed">
@@ -218,7 +218,7 @@ export default function ProjectsPage() {
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-[1100px]">
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                 <p className="text-3xl font-bold text-white mb-2">3447</p>
                 <p className="text-sm text-gray-300">завершенных проектов</p>
@@ -243,7 +243,7 @@ export default function ProjectsPage() {
       <KazakhstanMap/>
       {/* Filters and Search */}
       <section className="w-full bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="max-w-[1600px] mx-auto px-6 py-6">
           {/* Search Bar */}
           <div className="mb-6">
             <div className="relative max-w-md">
@@ -288,7 +288,7 @@ export default function ProjectsPage() {
 
       {/* Projects Grid */}
       <section className="w-full bg-gray-50 py-16 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           {filteredProjects.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-gray-500 text-lg">Проекты не найдены. Попробуйте изменить фильтры.</p>
@@ -375,7 +375,7 @@ export default function ProjectsPage() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-2xl max-w-[1100px] w-full max-h-[90vh] overflow-y-auto"
           >
             {/* Close Button */}
             <button

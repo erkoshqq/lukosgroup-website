@@ -14,10 +14,10 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         fields: {
-          TITLE: `Заявка с сайта: ${data.name}`,
+          TITLE: `Заявка с сайта${data.division ? ` (${data.division})` : ''}: ${data.name}`,
           NAME: data.name,
           PHONE: [{ VALUE: data.phone, VALUE_TYPE: "WORK" }],
-          EMAIL: [{ VALUE: data.email, VALUE_TYPE: "WORK" }],
+          ...(data.email ? { EMAIL: [{ VALUE: data.email, VALUE_TYPE: "WORK" }] } : {}),
           COMMENTS: data.message || '',
           SOURCE_ID: 'WEB',
         }

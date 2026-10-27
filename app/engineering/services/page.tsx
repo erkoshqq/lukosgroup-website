@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Услуги LUKOS GROUP - Полный цикл обследования',
     description: 'Техническое обследование, дефектоскопия, лабораторные испытания, геодезия',
-    url: 'https://lukosgroup.kz/services',
+    url: 'https://lukosgroup.kz/engineering/services',
     siteName: 'LUKOS GROUP',
     locale: 'ru_KZ',
     type: 'website',

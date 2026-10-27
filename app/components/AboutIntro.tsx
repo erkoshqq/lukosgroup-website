@@ -12,7 +12,7 @@ export default function AboutIntro() {
 
   return (
     <section className="min-h-screen w-full bg-white py-20 md:py-32 px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1600px] mx-auto">
         {/* TOP LABEL */}
         <div className="mb-8 md:mb-10">
           <p className="text-xs md:text-sm text-gray-500 tracking-[0.2em] uppercase">О компании</p>

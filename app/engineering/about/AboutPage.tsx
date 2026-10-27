@@ -44,8 +44,8 @@ export default function AboutPageHero() {
         </div>
 
         {/* Content */}
-        <div className="relative z-20 max-w-7xl mx-auto px-6 py-32">
-          <div className="max-w-4xl">
+        <div className="relative z-20 max-w-[1600px] mx-auto px-6 py-32">
+          <div className="max-w-[1100px]">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -145,7 +145,7 @@ export default function AboutPageHero() {
 
       {/* Story & Mission Section */}
       <section className="w-full bg-white py-24 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             {/* Left Column - Main Text */}
             <motion.div
@@ -261,7 +261,7 @@ export default function AboutPageHero() {
 
       {/* Key Directions Section */}
       <section className="w-full bg-gray-50 py-24 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -407,7 +407,7 @@ export default function AboutPageHero() {
 
       {/* Major Clients Section */}
       <section className="w-full bg-white py-24 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -503,7 +503,7 @@ export default function AboutPageHero() {
 
       {/* Project Photos Gallery */}
       <section className="w-full bg-gray-50 py-24 md:py-32 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -618,7 +618,7 @@ export default function AboutPageHero() {
             <X className="w-6 h-6 text-white" />
           </button>
           
-          <div className="relative max-w-6xl max-h-[90vh] w-full h-full">
+          <div className="relative max-w-[1440px] max-h-[90vh] w-full h-full">
             <Image
               src={selectedImage}
               alt="Project"

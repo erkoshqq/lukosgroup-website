@@ -43,7 +43,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900/95 to-gray-800/90" />
 
         {/* Контент */}
-        <div className="relative z-10 h-full flex items-center pt-20 px-6 md:px-16 max-w-7xl mx-auto w-full">
+        <div className="relative z-10 h-full flex items-center pt-20 px-6 md:px-16 max-w-[1600px] mx-auto w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16 items-center w-full">
 
             {/* Левая часть */}

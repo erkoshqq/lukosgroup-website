@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: service.seo.title,
       description: service.seo.description,
-      url: `https://lukosgroup.kz/services/${service.id}`,
+      url: `https://lukosgroup.kz/engineering/services/${service.id}`,
       siteName: "LUKOS GROUP",
       locale: "ru_KZ",
       type: "website",

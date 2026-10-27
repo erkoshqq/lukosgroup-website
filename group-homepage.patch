@@ -1,0 +1,621 @@
+diff --git a/app/GroupHomePage.tsx b/app/GroupHomePage.tsx
+new file mode 100644
+index 0000000..75c64dc
+--- /dev/null
++++ b/app/GroupHomePage.tsx
+@@ -0,0 +1,138 @@
++"use client";
++
++import Link from "next/link";
++import { motion } from "framer-motion";
++import { Building2, Server, Wrench, ArrowUpRight } from "lucide-react";
++import Footer from "./components/Footer";
++
++const divisions = [
++  {
++    key: "engineering",
++    href: "/engineering",
++    name: "Engineering",
++    role: "Инженерная диагностика",
++    description:
++      "Техническое обследование зданий и сооружений, дефектоскопия, лабораторные испытания и неразрушающий контроль.",
++    facts: ["3400+ обследованных объектов", "Государственная лицензия", "Работа по всему Казахстану"],
++    icon: Building2,
++    accent: {
++      text: "text-sky-400",
++      border: "hover:border-sky-400/50",
++      dot: "bg-sky-400",
++      iconBg: "bg-sky-400/10",
++    },
++  },
++  {
++    key: "technologies",
++    href: "/technologies",
++    name: "Technologies",
++    role: "Поставка оборудования",
++    description:
++      "Официальная дистрибуция серверного, сетевого и вычислительного оборудования известных производителей.",
++    facts: ["Прямые поставки от производителей", "Подбор и комплектация под задачу"],
++    icon: Server,
++    accent: {
++      text: "text-cyan-400",
++      border: "hover:border-cyan-400/50",
++      dot: "bg-cyan-400",
++      iconBg: "bg-cyan-400/10",
++    },
++  },
++  {
++    key: "maintenance",
++    href: "/maintenance",
++    name: "Maintenance",
++    role: "Промышленный сервис",
++    description:
++      "Техническое обслуживание производственных линий и оборудования на заводах — плановое и аварийное.",
++    facts: ["Обслуживание на территории заказчика"],
++    icon: Wrench,
++    accent: {
++      text: "text-amber-400",
++      border: "hover:border-amber-400/50",
++      dot: "bg-amber-400",
++      iconBg: "bg-amber-400/10",
++    },
++  },
++];
++
++export default function GroupHomePage() {
++  return (
++    <div className="min-h-screen bg-gray-950 text-white">
++      {/* Тонкая верхняя панель — не полноценный навбар направления, это и есть главная */}
++      <header className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
++        <span className="text-2xl">
++          <span className="font-light">lukos</span>
++          <span className="font-bold">group</span>
++        </span>
++        <a
++          href="#contacts"
++          className="text-sm text-gray-400 hover:text-white transition-colors"
++        >
++          Связаться
++        </a>
++      </header>
++
++      {/* Hero */}
++      <motion.section
++        initial={{ opacity: 0, y: 16 }}
++        animate={{ opacity: 1, y: 0 }}
++        transition={{ duration: 0.7 }}
++        className="max-w-4xl mx-auto px-6 pt-12 pb-20 text-center"
++      >
++        <img
++          src="/logo.png"
++          alt="Lukos Group"
++          className="h-24 w-auto mx-auto mb-8 opacity-90"
++        />
++        <h1 className="text-3xl md:text-5xl font-semibold leading-tight mb-6 text-balance">
++          Инженерия, технологии и промышленный сервис — в одной группе компаний
++        </h1>
++        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
++          Три направления, каждое сфокусировано на своей задаче: обследуем здания,
++          поставляем технику и обслуживаем производство. Начните с того, что вам нужно.
++        </p>
++      </motion.section>
++
++      {/* Направления */}
++      <section className="max-w-6xl mx-auto px-6 pb-28">
++        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
++          {divisions.map((d) => {
++            const Icon = d.icon;
++            return (
++              <Link
++                key={d.key}
++                href={d.href}
++                className={`group relative flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-colors ${d.accent.border}`}
++              >
++                <div className="flex items-start justify-between mb-6">
++                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${d.accent.iconBg}`}>
++                    <Icon className={`w-5 h-5 ${d.accent.text}`} />
++                  </div>
++                  <ArrowUpRight className="w-4 h-4 text-gray-600 group-hover:text-gray-300 transition-colors" />
++                </div>
++
++                <h2 className="text-xl font-semibold mb-1">
++                  <span className="font-light text-gray-400">lukos</span> {d.name}
++                </h2>
++                <p className={`text-sm mb-4 ${d.accent.text}`}>{d.role}</p>
++                <p className="text-gray-400 text-sm leading-relaxed mb-6">{d.description}</p>
++
++                <ul className="mt-auto space-y-2 pt-4 border-t border-white/10">
++                  {d.facts.map((fact) => (
++                    <li key={fact} className="flex items-center gap-2 text-xs text-gray-500">
++                      <span className={`w-1 h-1 rounded-full ${d.accent.dot}`} />
++                      {fact}
++                    </li>
++                  ))}
++                </ul>
++              </Link>
++            );
++          })}
++        </div>
++      </section>
++
++      <Footer />
++    </div>
++  );
++}
+diff --git a/app/components/Footer.tsx b/app/components/Footer.tsx
+index 21af0b8..54c46aa 100644
+--- a/app/components/Footer.tsx
++++ b/app/components/Footer.tsx
+@@ -2,17 +2,20 @@
+ 
+ import Link from "next/link";
+ import { Phone, Mail, MapPin, Clock } from "lucide-react";
+-import { brands, type BrandKey } from "./brands";
++import { brands, groupInfo, type BrandKey } from "./brands";
+ 
+-export default function Footer({ brand }: { brand: BrandKey }) {
+-  const config = brands[brand];
++export default function Footer({ brand }: { brand?: BrandKey }) {
++  const division = brand ? brands[brand] : null;
++  const description = division?.description ?? groupInfo.description;
++  const companyLinks = division?.footerCompanyLinks ?? groupInfo.footerCompanyLinks;
++  const serviceLinks = division?.footerServiceLinks ?? [];
+   const currentYear = new Date().getFullYear();
+ 
+   return (
+     <footer className="bg-gray-900 text-gray-300">
+       {/* Main Footer */}
+       <div className="max-w-7xl mx-auto px-6 py-16">
+-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
++        <div className={`grid grid-cols-1 md:grid-cols-2 gap-12 ${serviceLinks.length ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
+           
+           {/* Company Info */}
+           <div>
+@@ -21,8 +24,7 @@ export default function Footer({ brand }: { brand: BrandKey }) {
+               <span className="font-bold">group</span>
+             </Link>
+             <p className="text-gray-400 text-sm leading-relaxed mb-6">
+-              Группа компаний, специализирующаяся на комплексных технических обследованиях 
+-              и неразрушающем контроле.
++              {description}
+             </p>
+             <div className="flex gap-4">
+               <a 
+@@ -66,9 +68,9 @@ export default function Footer({ brand }: { brand: BrandKey }) {
+ 
+           {/* Quick Links */}
+           <div>
+-            <h3 className="text-white font-semibold text-lg mb-6">Компания</h3>
++            <h3 className="text-white font-semibold text-lg mb-6">{division ? "Компания" : "Направления"}</h3>
+             <ul className="space-y-3">
+-              {config.footerCompanyLinks.map((link) => (
++              {companyLinks.map((link) => (
+                 <li key={link.href}>
+                   <Link href={link.href} className="hover:text-white transition-colors text-sm">
+                     {link.title}
+@@ -79,21 +81,23 @@ export default function Footer({ brand }: { brand: BrandKey }) {
+           </div>
+ 
+           {/* Services */}
+-          <div>
+-            <h3 className="text-white font-semibold text-lg mb-6">Услуги</h3>
+-            <ul className="space-y-3">
+-              {config.footerServiceLinks.map((link) => (
+-                <li key={link.title + link.href}>
+-                  <Link href={link.href} className="hover:text-white transition-colors text-sm">
+-                    {link.title}
+-                  </Link>
+-                </li>
+-              ))}
+-            </ul>
+-          </div>
++          {serviceLinks.length > 0 && (
++            <div>
++              <h3 className="text-white font-semibold text-lg mb-6">Услуги</h3>
++              <ul className="space-y-3">
++                {serviceLinks.map((link) => (
++                  <li key={link.title + link.href}>
++                    <Link href={link.href} className="hover:text-white transition-colors text-sm">
++                      {link.title}
++                    </Link>
++                  </li>
++                ))}
++              </ul>
++            </div>
++          )}
+ 
+           {/* Contacts */}
+-          <div>
++          <div id="contacts">
+             <h3 className="text-white font-semibold text-lg mb-6">Контакты</h3>
+             <ul className="space-y-4">
+               <li className="flex items-start gap-3">
+diff --git a/app/components/Header.tsx b/app/components/Header.tsx
+index 5bba987..64303af 100644
+--- a/app/components/Header.tsx
++++ b/app/components/Header.tsx
+@@ -42,12 +42,12 @@ export default function Header({ brand }: { brand: BrandKey }) {
+         <nav className={`max-w-7xl mx-auto px-6 py-6 flex items-center transition-all duration-500 ${isCompact ? "justify-center" : "justify-between"}`}>
+ 
+           {/* Разделённый логотип: LUKOS ведёт на главную группы, название направления — на его главную */}
+-          <div className="flex items-baseline gap-2 text-3xl font-bold shrink-0">
+-            <Link href="/" className="hover:text-blue-400 transition-colors">
+-              LUKOS
++          <div className="flex items-baseline text-3xl shrink-0">
++            <Link href="/" className="hover:text-blue-400 transition-colors font-light">
++              lukos
+             </Link>
+             <span className="text-white/30 text-2xl font-light">/</span>
+-            <Link href={config.homeHref} className="text-blue-400 hover:text-blue-300 transition-colors">
++            <Link href={config.homeHref} className="hover:text-blue-300 transition-colors font-bold">
+               {config.shortLabel}
+             </Link>
+           </div>
+@@ -127,10 +127,10 @@ export default function Header({ brand }: { brand: BrandKey }) {
+         />
+         <aside className={`absolute right-0 top-0 h-full w-72 bg-blue-950 p-6 text-white transition-transform duration-300 overflow-y-auto ${menuOpen ? "translate-x-0" : "translate-x-full"}`}>
+           <div className="flex justify-between items-center mb-10">
+-            <div className="flex items-baseline gap-2 text-lg font-bold">
+-              <Link href="/" onClick={() => setMenuOpen(false)}>LUKOS</Link>
++            <div className="flex items-baseline gap-1 text-lg">
++              <Link href="/" onClick={() => setMenuOpen(false)} className="font-light">lukos</Link>
+               <span className="text-white/30 font-light">/</span>
+-              <Link href={config.homeHref} onClick={() => setMenuOpen(false)} className="text-blue-400">
++              <Link href={config.homeHref} onClick={() => setMenuOpen(false)} className="font-bold">
+                 {config.shortLabel}
+               </Link>
+             </div>
+diff --git a/app/components/brands.ts b/app/components/brands.ts
+index 57afd95..119ec63 100644
+--- a/app/components/brands.ts
++++ b/app/components/brands.ts
+@@ -19,13 +19,15 @@ export interface FooterLink {
+ 
+ export interface BrandConfig {
+   key: BrandKey;
+-  // Показывается в навбаре после "LUKOS", напр. "Engineering"
++  // Показывается в навбаре после "lukos", напр. "Engineering"
+   shortLabel: string;
+   // Главная страница направления, напр. "/engineering"
+   homeHref: string;
+   nav: NavItem[];
+   ctaHref: string;
+   ctaLabel: string;
++  // Короткое описание направления для футера
++  description: string;
+   footerCompanyLinks: FooterLink[];
+   footerServiceLinks: FooterLink[];
+ }
+@@ -37,6 +39,7 @@ export const brands: Record<BrandKey, BrandConfig> = {
+     homeHref: "/engineering",
+     ctaHref: "/engineering/request",
+     ctaLabel: "Связаться",
++    description: "Техническое обследование зданий, дефектоскопия и неразрушающий контроль по всему Казахстану.",
+     nav: [
+       { title: "О направлении", href: "/engineering/about" },
+       {
+@@ -70,22 +73,21 @@ export const brands: Record<BrandKey, BrandConfig> = {
+     ],
+   },
+ 
+-  // Заготовки — наполним, когда будем делать сами разделы.
++  // Пока однастраничники — расширим до полноценного раздела позже.
+   technologies: {
+     key: "technologies",
+     shortLabel: "Technologies",
+     homeHref: "/technologies",
+-    ctaHref: "/technologies/request",
++    ctaHref: "#contacts",
+     ctaLabel: "Связаться",
++    description: "Поставка серверного и сетевого оборудования — официальная дистрибуция известных производителей техники.",
+     nav: [
+-      { title: "О направлении", href: "/technologies/about" },
+-      { title: "Оборудование", href: "/technologies/products" },
+-      { title: "Контакты", href: "/technologies/contact" },
++      { title: "Контакты", href: "#contacts" },
+     ],
+     footerCompanyLinks: [
+-      { title: "О направлении", href: "/technologies/about" },
+-      { title: "Оборудование", href: "/technologies/products" },
+-      { title: "Контакты", href: "/technologies/contact" },
++      { title: "lukos group", href: "/" },
++      { title: "Engineering", href: "/engineering" },
++      { title: "Maintenance", href: "/maintenance" },
+     ],
+     footerServiceLinks: [],
+   },
+@@ -94,18 +96,29 @@ export const brands: Record<BrandKey, BrandConfig> = {
+     key: "maintenance",
+     shortLabel: "Maintenance",
+     homeHref: "/maintenance",
+-    ctaHref: "/maintenance/request",
++    ctaHref: "#contacts",
+     ctaLabel: "Связаться",
++    description: "Техническое обслуживание производственных линий и промышленного оборудования на заводах.",
+     nav: [
+-      { title: "О направлении", href: "/maintenance/about" },
+-      { title: "Услуги", href: "/maintenance/services" },
+-      { title: "Контакты", href: "/maintenance/contact" },
++      { title: "Контакты", href: "#contacts" },
+     ],
+     footerCompanyLinks: [
+-      { title: "О направлении", href: "/maintenance/about" },
+-      { title: "Услуги", href: "/maintenance/services" },
+-      { title: "Контакты", href: "/maintenance/contact" },
++      { title: "lukos group", href: "/" },
++      { title: "Engineering", href: "/engineering" },
++      { title: "Technologies", href: "/technologies" },
+     ],
+     footerServiceLinks: [],
+   },
+ };
++
++// Используется на корневой главной группы и в Footer, когда brand не задан.
++export const groupInfo = {
++  shortLabel: "GROUP",
++  homeHref: "/",
++  description: "Группа компаний в сфере инженерной диагностики, поставки технологий и промышленного сервиса.",
++  footerCompanyLinks: [
++    { title: "Engineering", href: "/engineering" },
++    { title: "Technologies", href: "/technologies" },
++    { title: "Maintenance", href: "/maintenance" },
++  ] as FooterLink[],
++};
+diff --git a/app/maintenance/layout.tsx b/app/maintenance/layout.tsx
+new file mode 100644
+index 0000000..cc0e23e
+--- /dev/null
++++ b/app/maintenance/layout.tsx
+@@ -0,0 +1,29 @@
++import Header from "../components/Header";
++import Footer from "../components/Footer";
++
++export default function MaintenanceLayout({ children }: { children: React.ReactNode }) {
++  const jsonLd = {
++    '@context': 'https://schema.org',
++    '@type': 'Organization',
++    name: 'Lukos Maintenance',
++    parentOrganization: {
++      '@type': 'Organization',
++      name: 'LUKOS GROUP',
++      url: 'https://lukosgroup.kz',
++    },
++    description: 'Техническое обслуживание производственных линий и оборудования',
++    url: 'https://lukosgroup.kz/maintenance',
++  };
++
++  return (
++    <>
++      <script
++        type="application/ld+json"
++        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
++      />
++      <Header brand="maintenance" />
++      {children}
++      <Footer brand="maintenance" />
++    </>
++  );
++}
+diff --git a/app/maintenance/page.tsx b/app/maintenance/page.tsx
+new file mode 100644
+index 0000000..5938399
+--- /dev/null
++++ b/app/maintenance/page.tsx
+@@ -0,0 +1,61 @@
++import type { Metadata } from 'next'
++import { Wrench, Factory, Clock3 } from 'lucide-react'
++
++export const metadata: Metadata = {
++  title: 'Lukos Maintenance — обслуживание промышленного оборудования | LUKOS GROUP',
++  description:
++    'Lukos Maintenance — техническое обслуживание производственных линий и промышленного оборудования на заводах в Казахстане.',
++  openGraph: {
++    title: 'Lukos Maintenance — промышленный сервис',
++    description: 'Обслуживание производственных линий и оборудования на заводах.',
++    url: 'https://lukosgroup.kz/maintenance',
++    siteName: 'LUKOS GROUP',
++    locale: 'ru_KZ',
++    type: 'website',
++  },
++}
++
++export default function Page() {
++  return (
++    <div className="min-h-screen bg-gray-950 text-white">
++      <section className="max-w-3xl mx-auto px-6 pt-40 pb-20">
++        <div className="flex items-center gap-2 text-amber-400 text-sm mb-6">
++          <Wrench className="w-4 h-4" />
++          Lukos Maintenance
++        </div>
++
++        <h1 className="text-3xl md:text-4xl font-semibold leading-tight mb-6">
++          Обслуживание производственных линий и оборудования
++        </h1>
++
++        <p className="text-gray-400 text-base leading-relaxed mb-4">
++          Lukos Maintenance — направление группы компаний LUKOS, которое занимается
++          техническим обслуживанием оборудования и производственных линий на заводах:
++          плановым и аварийным.
++        </p>
++        <p className="text-gray-400 text-base leading-relaxed mb-12">
++          Раздел пока в разработке — если у вас есть задача по обслуживанию производства,
++          опишите её нам, и мы обсудим, чем можем помочь.
++        </p>
++
++        <div className="grid sm:grid-cols-2 gap-4 mb-12">
++          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
++            <Factory className="w-5 h-5 text-amber-400 mb-3" />
++            <p className="text-sm text-gray-300">Работаем на территории заказчика, на действующем производстве</p>
++          </div>
++          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
++            <Clock3 className="w-5 h-5 text-amber-400 mb-3" />
++            <p className="text-sm text-gray-300">Плановое и аварийное обслуживание</p>
++          </div>
++        </div>
++
++        <a
++          href="#contacts"
++          className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-6 py-3 text-sm font-medium text-gray-950 hover:bg-amber-400 transition-colors"
++        >
++          Обсудить задачу
++        </a>
++      </section>
++    </div>
++  )
++}
+diff --git a/app/page.tsx b/app/page.tsx
+index 68db13e..88151db 100644
+--- a/app/page.tsx
++++ b/app/page.tsx
+@@ -1,8 +1,20 @@
+-import { redirect } from 'next/navigation'
++import type { Metadata } from 'next'
++import GroupHomePage from './GroupHomePage'
++
++export const metadata: Metadata = {
++  title: 'LUKOS GROUP — Инженерия, технологии и промышленный сервис в Казахстане',
++  description:
++    'Группа компаний LUKOS: техническое обследование зданий и дефектоскопия (Engineering), поставка серверного и сетевого оборудования (Technologies), обслуживание производственных линий (Maintenance).',
++  openGraph: {
++    title: 'LUKOS GROUP — Инженерия, технологии и промышленный сервис',
++    description: 'Три направления одной группы компаний в Казахстане.',
++    url: 'https://lukosgroup.kz',
++    siteName: 'LUKOS GROUP',
++    locale: 'ru_KZ',
++    type: 'website',
++  },
++}
+ 
+-// TODO: заменить на настоящую главную страницу группы компаний
+-// (обзор трёх направлений: Engineering, Technologies, Maintenance).
+-// Пока редиректим на действующий сайт направления Engineering.
+ export default function Page() {
+-  redirect('/engineering')
++  return <GroupHomePage />
+ }
+diff --git a/app/sitemap.ts b/app/sitemap.ts
+index f92283a..dad6ba5 100644
+--- a/app/sitemap.ts
++++ b/app/sitemap.ts
+@@ -14,6 +14,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
+       changeFrequency: 'weekly',
+       priority: 0.9,
+     },
++    {
++      url: 'https://lukosgroup.kz/technologies',
++      lastModified: new Date(),
++      changeFrequency: 'monthly',
++      priority: 0.7,
++    },
++    {
++      url: 'https://lukosgroup.kz/maintenance',
++      lastModified: new Date(),
++      changeFrequency: 'monthly',
++      priority: 0.7,
++    },
+     {
+       url: 'https://lukosgroup.kz/engineering/about',
+       lastModified: new Date(),
+diff --git a/app/technologies/layout.tsx b/app/technologies/layout.tsx
+new file mode 100644
+index 0000000..dca7978
+--- /dev/null
++++ b/app/technologies/layout.tsx
+@@ -0,0 +1,29 @@
++import Header from "../components/Header";
++import Footer from "../components/Footer";
++
++export default function TechnologiesLayout({ children }: { children: React.ReactNode }) {
++  const jsonLd = {
++    '@context': 'https://schema.org',
++    '@type': 'Organization',
++    name: 'Lukos Technologies',
++    parentOrganization: {
++      '@type': 'Organization',
++      name: 'LUKOS GROUP',
++      url: 'https://lukosgroup.kz',
++    },
++    description: 'Поставка серверного и сетевого оборудования',
++    url: 'https://lukosgroup.kz/technologies',
++  };
++
++  return (
++    <>
++      <script
++        type="application/ld+json"
++        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
++      />
++      <Header brand="technologies" />
++      {children}
++      <Footer brand="technologies" />
++    </>
++  );
++}
+diff --git a/app/technologies/page.tsx b/app/technologies/page.tsx
+new file mode 100644
+index 0000000..e55d7bc
+--- /dev/null
++++ b/app/technologies/page.tsx
+@@ -0,0 +1,62 @@
++import type { Metadata } from 'next'
++import { Server, ShieldCheck, Truck } from 'lucide-react'
++
++export const metadata: Metadata = {
++  title: 'Lukos Technologies — поставка серверного и сетевого оборудования | LUKOS GROUP',
++  description:
++    'Lukos Technologies — официальная дистрибуция серверного, сетевого и вычислительного оборудования известных производителей в Казахстане.',
++  openGraph: {
++    title: 'Lukos Technologies — поставка оборудования',
++    description: 'Официальная дистрибуция серверного и сетевого оборудования.',
++    url: 'https://lukosgroup.kz/technologies',
++    siteName: 'LUKOS GROUP',
++    locale: 'ru_KZ',
++    type: 'website',
++  },
++}
++
++export default function Page() {
++  return (
++    <div className="min-h-screen bg-gray-950 text-white">
++      <section className="max-w-3xl mx-auto px-6 pt-40 pb-20">
++        <div className="flex items-center gap-2 text-cyan-400 text-sm mb-6">
++          <Server className="w-4 h-4" />
++          Lukos Technologies
++        </div>
++
++        <h1 className="text-3xl md:text-4xl font-semibold leading-tight mb-6">
++          Поставка серверного и сетевого оборудования
++        </h1>
++
++        <p className="text-gray-400 text-base leading-relaxed mb-4">
++          Lukos Technologies — направление группы компаний LUKOS, которое занимается
++          официальной дистрибуцией серверного, сетевого и вычислительного оборудования
++          известных производителей. Работаем с бизнесом и государственными заказчиками
++          в Казахстане: подбираем и поставляем технику под конкретную задачу.
++        </p>
++        <p className="text-gray-400 text-base leading-relaxed mb-12">
++          Раздел пока в разработке — если вам нужно подобрать оборудование или узнать
++          о прямых поставках, напишите нам, и мы ответим лично.
++        </p>
++
++        <div className="grid sm:grid-cols-2 gap-4 mb-12">
++          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
++            <Truck className="w-5 h-5 text-cyan-400 mb-3" />
++            <p className="text-sm text-gray-300">Прямые поставки от производителей, без посредников</p>
++          </div>
++          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
++            <ShieldCheck className="w-5 h-5 text-cyan-400 mb-3" />
++            <p className="text-sm text-gray-300">Подбор и комплектация оборудования под задачу заказчика</p>
++          </div>
++        </div>
++
++        <a
++          href="#contacts"
++          className="inline-flex items-center justify-center rounded-lg bg-cyan-500 px-6 py-3 text-sm font-medium text-gray-950 hover:bg-cyan-400 transition-colors"
++        >
++          Обсудить поставку
++        </a>
++      </section>
++    </div>
++  )
++}

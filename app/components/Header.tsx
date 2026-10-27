@@ -39,7 +39,7 @@ export default function Header({ brand }: { brand: BrandKey }) {
   return (
     <>
       <header className="fixed top-0 w-full z-50 text-white bg-black/40 backdrop-blur-lg transition-all duration-500">
-        <nav className={`max-w-7xl mx-auto px-6 py-6 flex items-center transition-all duration-500 ${isCompact ? "justify-center" : "justify-between"}`}>
+        <nav className={`max-w-[1600px] mx-auto px-6 py-6 flex items-center transition-all duration-500 ${isCompact ? "justify-center" : "justify-between"}`}>
 
           {/* Разделённый логотип: LUKOS ведёт на главную группы, название направления — на его главную */}
           <div className="flex items-baseline text-3xl shrink-0">
@@ -127,10 +127,10 @@ export default function Header({ brand }: { brand: BrandKey }) {
         />
         <aside className={`absolute right-0 top-0 h-full w-72 bg-blue-950 p-6 text-white transition-transform duration-300 overflow-y-auto ${menuOpen ? "translate-x-0" : "translate-x-full"}`}>
           <div className="flex justify-between items-center mb-10">
-            <div className="flex items-baseline text-lg font-bold">
-              <Link href="/" onClick={() => setMenuOpen(false)}>lukos</Link>
+            <div className="flex items-baseline gap-1 text-lg">
+              <Link href="/" onClick={() => setMenuOpen(false)} className="font-light">lukos</Link>
               <span className="text-white/30 font-light">/</span>
-              <Link href={config.homeHref} onClick={() => setMenuOpen(false)} className="text-blue-400">
+              <Link href={config.homeHref} onClick={() => setMenuOpen(false)} className="font-bold">
                 {config.shortLabel}
               </Link>
             </div>

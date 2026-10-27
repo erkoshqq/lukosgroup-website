@@ -57,7 +57,7 @@ const services = [
 export default function ServicesGrid() {
   return (
     <section className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1600px] mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

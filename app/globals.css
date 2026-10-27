@@ -32,3 +32,30 @@ html {
   scroll-behavior: smooth;
 }
 
+
+/* Бесконечная лента логотипов (LogoMarquee).
+   Лента состоит из N одинаковых наборов и сдвигается ровно на ширину одного набора,
+   поэтому цикл бесшовный на любой ширине экрана. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--marquee-shift, -25%));
+  }
+}
+
+.marquee-track {
+  animation: marquee-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

@@ -2,17 +2,20 @@
 
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { brands, type BrandKey } from "./brands";
+import { brands, groupInfo, type BrandKey } from "./brands";
 
-export default function Footer({ brand }: { brand: BrandKey }) {
-  const config = brands[brand];
+export default function Footer({ brand }: { brand?: BrandKey }) {
+  const division = brand ? brands[brand] : null;
+  const description = division?.description ?? groupInfo.description;
+  const companyLinks = division?.footerCompanyLinks ?? groupInfo.footerCompanyLinks;
+  const serviceLinks = division?.footerServiceLinks ?? [];
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-gray-900 text-gray-300">
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-[1600px] mx-auto px-6 py-16">
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-12 ${serviceLinks.length ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
           
           {/* Company Info */}
           <div>
@@ -21,8 +24,7 @@ export default function Footer({ brand }: { brand: BrandKey }) {
               <span className="font-bold">group</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Группа компаний, специализирующаяся на комплексных технических обследованиях 
-              и неразрушающем контроле.
+              {description}
             </p>
             <div className="flex gap-4">
               <a 
@@ -66,9 +68,9 @@ export default function Footer({ brand }: { brand: BrandKey }) {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold text-lg mb-6">Компания</h3>
+            <h3 className="text-white font-semibold text-lg mb-6">{division ? "Компания" : "Направления"}</h3>
             <ul className="space-y-3">
-              {config.footerCompanyLinks.map((link) => (
+              {companyLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="hover:text-white transition-colors text-sm">
                     {link.title}
@@ -79,21 +81,23 @@ export default function Footer({ brand }: { brand: BrandKey }) {
           </div>
 
           {/* Services */}
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-6">Услуги</h3>
-            <ul className="space-y-3">
-              {config.footerServiceLinks.map((link) => (
-                <li key={link.title + link.href}>
-                  <Link href={link.href} className="hover:text-white transition-colors text-sm">
-                    {link.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {serviceLinks.length > 0 && (
+            <div>
+              <h3 className="text-white font-semibold text-lg mb-6">Услуги</h3>
+              <ul className="space-y-3">
+                {serviceLinks.map((link) => (
+                  <li key={link.title + link.href}>
+                    <Link href={link.href} className="hover:text-white transition-colors text-sm">
+                      {link.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Contacts */}
-          <div>
+          <div id="contacts">
             <h3 className="text-white font-semibold text-lg mb-6">Контакты</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
@@ -136,7 +140,7 @@ export default function Footer({ brand }: { brand: BrandKey }) {
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="max-w-[1600px] mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 text-sm text-center md:text-left">
               © {currentYear} LUKOS GROUP. Все права защищены.

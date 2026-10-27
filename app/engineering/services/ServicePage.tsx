@@ -63,7 +63,7 @@ const scrollToService = (id: string) => {
           }}></div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 w-full">
+        <div className="relative z-10 max-w-[1600px] mx-auto px-6 py-24 w-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,7 +72,7 @@ const scrollToService = (id: string) => {
             <p className="text-blue-300 text-sm tracking-[0.2em] uppercase mb-6">
               НАШИ УСЛУГИ
             </p>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight max-w-4xl">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight max-w-[1100px]">
               Комплексные решения для безопасности объектов
             </h1>
             <p className="text-xl text-blue-100 mb-12 max-w-3xl leading-relaxed">
@@ -106,7 +106,7 @@ const scrollToService = (id: string) => {
 
       {/* Services List */}
       <section className="w-full bg-gray-50 py-24 px-6">
-        <div className="max-w-5xl mx-auto space-y-6">
+        <div className="max-w-[1280px] mx-auto space-y-6">
           {services.map((service, index) => {
             const Icon = service.icon;
             const isExpanded = expandedIds.includes(service.id);
@@ -322,7 +322,7 @@ const scrollToService = (id: string) => {
 
       {/* CTA Section */}
       <section className="w-full bg-white py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-[1100px] mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

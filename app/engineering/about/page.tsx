@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'О компании LUKOS GROUP',
     description: '7 лет опыта, 3300+ объектов, 26 экспертов',
-    url: 'https://lukosgroup.kz/about',
+    url: 'https://lukosgroup.kz/engineering/about',
     siteName: 'LUKOS GROUP',
     locale: 'ru_KZ',
     type: 'website',

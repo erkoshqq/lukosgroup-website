@@ -34,7 +34,7 @@ export default function TestimonialsSlider() {
   return (
     <>
       <section className="w-full bg-white py-20 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -151,7 +151,7 @@ export default function TestimonialsSlider() {
             <X className="w-6 h-6 text-white" />
           </button>
           
-          <div className="relative max-w-4xl max-h-[90vh] w-full h-full">
+          <div className="relative max-w-[1100px] max-h-[90vh] w-full h-full">
             <Image
               src={selectedImage}
               alt="Review"

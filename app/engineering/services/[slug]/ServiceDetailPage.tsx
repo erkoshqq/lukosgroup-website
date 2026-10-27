@@ -26,7 +26,7 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
       }
     },
     "areaServed": "Kazakhstan",
-    "url": `https://lukosgroup.kz/services/${service.id}`
+    "url": `https://lukosgroup.kz/engineering/services/${service.id}`
   };
   
   const Icon = service.icon;
@@ -41,7 +41,7 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
       />
       {/* Hero */}
       <section className="relative min-h-[50vh] w-full bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900 flex items-center">
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 w-full">
+        <div className="relative z-10 max-w-[1600px] mx-auto px-6 py-32 w-full">
           {/* Хлебные крошки */}
           <div className="flex items-center gap-2 text-blue-300 text-sm mb-8">
             <Link href="/engineering" className="hover:text-white transition-colors">Главная</Link>
@@ -71,7 +71,7 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
 
       {/* Content */}
       <section className="w-full bg-gray-50 py-24 px-6">
-        <div className="max-w-4xl mx-auto space-y-12">
+        <div className="max-w-[1100px] mx-auto space-y-12">
 
           {/* Описание */}
           <motion.div

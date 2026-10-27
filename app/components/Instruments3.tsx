@@ -325,7 +325,7 @@ export default function EquipmentAppleDock() {
   return (
     <section className="min-h-screen w-full bg-gray-900 py-16 px-4">
       {/* HEADER */}
-      <div className="max-w-7xl mx-auto text-center text-white mb-8">
+      <div className="max-w-[1600px] mx-auto text-center text-white mb-8">
         <p className="text-xs text-blue-400 tracking-[0.2em] uppercase mb-3">
           НАШЕ ОБОРУДОВАНИЕ
         </p>
