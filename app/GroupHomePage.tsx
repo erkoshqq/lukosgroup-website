@@ -115,7 +115,7 @@ export default function GroupHomePage() {
                   </div>
 
                   <h2 className="text-lg font-semibold mb-1">
-                    <span className="font-light text-gray-400">lukos</span> {d.name}
+                    <span className="font-semibold text-gray-400">Lukos</span> {d.name}
                   </h2>
                   <p className={`text-sm mb-3 ${d.accent.text}`}>{d.role}</p>
                   <p className="text-gray-400 text-sm leading-relaxed mb-4">{d.description}</p>
