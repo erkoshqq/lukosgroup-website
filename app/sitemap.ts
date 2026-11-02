@@ -159,6 +159,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: 'https://lukosgroup.kz/maintenance/services',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: 'https://lukosgroup.kz/maintenance/process',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: 'https://lukosgroup.kz/maintenance/about',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: 'https://lukosgroup.kz/maintenance/contact',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
       url: 'https://lukosgroup.kz/engineering/about',
       lastModified: new Date(),
       changeFrequency: 'monthly',

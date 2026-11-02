@@ -44,8 +44,8 @@ const divisions = [
     name: "Maintenance",
     role: "Промышленный сервис",
     description:
-      "Техническое обслуживание производственных линий и оборудования на заводах — плановое и аварийное.",
-    facts: ["Обслуживание на территории заказчика"],
+      "Обслуживание и ремонт динамического оборудования на заводах: собственная бригада работает на вашем объекте.",
+    facts: ["Работа в системах учёта заказчика", "Плановое и аварийное обслуживание", "Опыт на производстве Pepsi"],
     icon: Wrench,
     accent: {
       text: "text-amber-400",
@@ -69,13 +69,13 @@ export default function GroupHomePage() {
 
         {/* Тонкая верхняя панель — не полноценный навбар направления, это и есть главная */}
         <header className="relative z-10 max-w-[1600px] mx-auto w-full px-6 py-6 flex items-center justify-between shrink-0">
-          <span className="text-2xl">
+          <span className="text-3xl">
             <span className="font-light">lukos</span>
             <span className="font-bold">group</span>
           </span>
           <a
             href="#contacts"
-            className="text-sm font-medium px-4 py-2 rounded-lg bg-white/10 hover:bg-white/15 transition-colors"
+            className="text-xl font-medium px-4 py-2 rounded-lg bg-white/10 hover:bg-white/15 transition-colors"
           >
             Связаться
           </a>

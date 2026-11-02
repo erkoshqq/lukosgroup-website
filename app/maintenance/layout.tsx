@@ -11,7 +11,7 @@ export default function MaintenanceLayout({ children }: { children: React.ReactN
       name: 'LUKOS GROUP',
       url: 'https://lukosgroup.kz',
     },
-    description: 'Техническое обслуживание производственных линий и оборудования',
+    description: 'Обслуживание и ремонт динамического оборудования на производстве',
     url: 'https://lukosgroup.kz/maintenance',
   };
 
