@@ -23,7 +23,7 @@ export default function DivisionPageHero({
   return (
     <section
       className={`relative w-full bg-linear-to-br from-blue-900 via-blue-800 to-gray-900 flex items-center ${
-        tall ? "min-h-[80vh]" : "min-h-[50vh]"
+        tall ? "min-h-screen" : "min-h-[50vh]"
       }`}
     >
       <div className="absolute inset-0 opacity-10">
@@ -38,12 +38,19 @@ export default function DivisionPageHero({
       </div>
 
       {visual && (
-        <div className={`pointer-events-none hidden lg:block absolute right-[3%] -translate-y-1/2 w-[44%] max-w-[760px] text-blue-200/60 ${tall ? "top-[42%]" : "top-[calc(50%+2.75rem)]"}`}>
-          {visual}
-        </div>
+        tall ? (
+          // Одноэкранный hero: графика занимает область под хедером и целиком в ней помещается
+          <div className="pointer-events-none hidden lg:flex absolute right-[3%] top-[6.5rem] bottom-10 w-[44%] max-w-[760px] items-center justify-center text-blue-200/60 [&>svg]:w-full [&>svg]:h-full">
+            {visual}
+          </div>
+        ) : (
+          <div className="pointer-events-none hidden lg:block absolute right-[3%] -translate-y-1/2 w-[44%] max-w-[760px] text-blue-200/60 top-[calc(50%+2.75rem)]">
+            {visual}
+          </div>
+        )
       )}
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-6 pt-40 pb-24 w-full">
+      <div className={`relative z-10 max-w-[1600px] mx-auto px-6 w-full ${tall ? "pt-28 pb-10 lg:pt-32" : "pt-40 pb-24"}`}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
