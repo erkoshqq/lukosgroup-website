@@ -4,8 +4,12 @@ import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  // Оставьте только fallback title (если страница не установит свой)
   metadataBase: new URL('https://lukosgroup.kz'),
+
+  // Запасные значения для страниц, которые не задали свои
+  title: 'LUKOS GROUP — Инженерия, технологии и промышленный сервис',
+  description:
+    'Группа компаний LUKOS: техническое обследование зданий (Engineering), поставка ИТ-оборудования (Technologies), обслуживание промышленного оборудования (Maintenance).',
 
   // Общие для всех страниц группы
   authors: [{ name: 'LUKOS GROUP' }],

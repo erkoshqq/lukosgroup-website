@@ -32,7 +32,15 @@ export const metadata: Metadata = {
 const iconBox = 'w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0'
 const row = 'flex items-start gap-4 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors'
 
-export default function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string | string[] }>
+}) {
+  const sp = await searchParams
+  const slug = Array.isArray(sp.category) ? sp.category[0] : sp.category
+  const preselected = categories.find((c) => c.slug === slug)?.title
+
   return (
     <>
       <DivisionPageHero
@@ -117,6 +125,7 @@ export default function Page() {
                   division="Lukos Technologies"
                   placeholder="Опишите задачу или приложите ссылку на ТЗ..."
                   extraFields={extraFields}
+                  defaults={preselected ? { category: preselected } : {}}
                 />
               </div>
             </Reveal>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 // Форма заявки в стиле Engineering (светлая). Лид уходит в Bitrix24 через /api/bitrix
@@ -18,14 +19,17 @@ export default function ContactForm({
   placeholder = "Опишите задачу...",
   submitLabel = "Отправить заявку",
   extraFields = [],
+  defaults = {},
 }: {
   division: string;
   placeholder?: string;
   submitLabel?: string;
   // Дополнительные поля (категория, количество и т.п.). Их значения добавляются в текст заявки.
   extraFields?: ExtraField[];
+  // Начальные значения полей (например, выбранная категория)
+  defaults?: Record<string, string>;
 }) {
-  const [form, setForm] = useState<Record<string, string>>({ name: "", phone: "", email: "", message: "" });
+  const [form, setForm] = useState<Record<string, string>>({ name: "", phone: "", email: "", message: "", ...defaults });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -117,7 +121,8 @@ export default function ContactForm({
         <p className="text-sm text-red-600 text-center">Не удалось отправить заявку. Попробуйте позже или позвоните нам.</p>
       )}
       <p className="text-xs text-gray-500 text-center">
-        Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+        Нажимая кнопку, вы соглашаетесь с{" "}
+        <Link href="/privacy" className="underline hover:text-gray-700">политикой конфиденциальности</Link>
       </p>
     </form>
   );

@@ -111,7 +111,7 @@ export default function HomePage() {
                 className="flex flex-col sm:flex-row gap-3"
               >
                 
-                <a href="/engineering/request"
+                <a href="/engineering/contact"
                   className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg transition-colors text-sm md:text-base"
                 >
                   Получить консультацию

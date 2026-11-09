@@ -4,6 +4,7 @@ import DivisionPageHero from '../../components/DivisionPageHero'
 import SectionHeading from '../../components/SectionHeading'
 import Reveal from '../../components/Reveal'
 import MaintCTA from '../MaintCTA'
+import { VibrationPanel } from '../visuals'
 import { services } from '../data'
 
 export const metadata: Metadata = {
@@ -39,25 +40,51 @@ export default function Page() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {services.map((s, i) => {
               const Icon = s.icon
+
+              // Вибродиагностика — новая услуга, показываем её крупно и с иллюстрацией
+              if (s.slug === 'vibration') {
+                return (
+                  <Reveal key={s.slug} className="md:col-span-2">
+                    <article
+                      id={s.slug}
+                      className="scroll-mt-28 rounded-2xl bg-linear-to-br from-blue-900 via-blue-800 to-gray-900 p-8 md:p-12 text-white"
+                    >
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                        <div>
+                          <div className="flex flex-wrap items-center gap-3 mb-5">
+                            <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center">
+                              <Icon className="w-7 h-7 text-blue-100" />
+                            </div>
+                            <span className="text-xs font-medium text-blue-900 bg-blue-100 rounded-full px-3 py-1">
+                              Новая услуга
+                            </span>
+                          </div>
+                          <h3 className="text-2xl md:text-3xl font-semibold mb-4">{s.title}</h3>
+                          <p className="text-blue-100 leading-relaxed mb-4">{s.text}</p>
+                          <p className="text-blue-100 leading-relaxed">
+                            Видим развивающийся дефект заранее и планируем ремонт, а не
+                            останавливаем линию аварийно.
+                          </p>
+                        </div>
+                        <VibrationPanel />
+                      </div>
+                    </article>
+                  </Reveal>
+                )
+              }
+
               return (
                 <Reveal key={s.slug} delay={(i % 2) * 0.1}>
                   <article
                     id={s.slug}
-                    className="scroll-mt-28 h-full bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-300"
+                    className="scroll-mt-28 h-full bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                   >
                     <div className="flex items-start gap-5">
                       <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
                         <Icon className="w-7 h-7 text-blue-900" />
                       </div>
                       <div>
-                        <div className="flex flex-wrap items-center gap-3 mb-3">
-                          <h3 className="text-xl font-semibold text-gray-900">{s.title}</h3>
-                          {s.isNew && (
-                            <span className="text-xs font-medium text-blue-900 bg-blue-100 rounded-full px-3 py-1">
-                              Новая услуга
-                            </span>
-                          )}
-                        </div>
+                        <h3 className="text-xl font-semibold text-gray-900 mb-3">{s.title}</h3>
                         <p className="text-gray-600 leading-relaxed">{s.text}</p>
                       </div>
                     </div>

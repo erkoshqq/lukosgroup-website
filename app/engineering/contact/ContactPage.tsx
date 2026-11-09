@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Phone, Mail, MapPin, Clock, Send, User, MessageSquare } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { contactInfo } from "../../components/contactInfo";
 
 
 
@@ -17,6 +19,17 @@ export default function ContactPage() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error" | "invalid">("idle");
+
+  const subjectLabels: Record<string, string> = {
+    inspection: "Техническое обследование",
+    defectoscopy: "Дефектоскопия",
+    laboratory: "Лабораторные испытания",
+    geodetic: "Геодезическая съемка",
+    calculation: "Поверочный расчёт",
+    geological: "Геологические изыскания",
+    other: "Другое",
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -25,18 +38,42 @@ export default function ContactPage() {
     });
   };
 
-  const handleSubmit = (e: React.MouseEvent) => {
+  const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
+
+    if (!formData.name.trim() || !formData.phone.trim() || !formData.message.trim()) {
+      setStatus("invalid");
+      return;
+    }
+
     setIsSubmitting(true);
-    
-    // Здесь будет логика отправки формы
-    console.log("Form submitted:", formData);
-    
-    setTimeout(() => {
-      alert("Спасибо! Мы свяжемся с вами в ближайшее время.");
-      setFormData({ name: "", phone: "", email: "", subject: "", message: "" });
-      setIsSubmitting(false);
-    }, 1000);
+    setStatus("idle");
+
+    const subject = subjectLabels[formData.subject];
+    const message = [subject ? `Тема: ${subject}` : "", formData.message].filter(Boolean).join("\n\n");
+
+    try {
+      const res = await fetch("/api/bitrix", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          message,
+          division: "Lukos Engineering",
+        }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", phone: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+    setIsSubmitting(false);
   };
 
   return (
@@ -94,15 +131,11 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Телефон</h3>
-                    <a href="tel:+77089537178" className="text-gray-600 hover:text-blue-900 transition-colors block">
-                      +7 (708) 953-71-78 
-                    </a>
-                    <a href="tel:+77082586688" className="text-gray-600 hover:text-blue-900 transition-colors block">
-                      +7 (708) 258-66-88
-                    </a>
-                    <a href="tel:+77763570572" className="text-gray-600 hover:text-blue-900 transition-colors block">
-                      +7 (776) 357-05-72
-                    </a>
+                    {contactInfo.phones.map((ph) => (
+                      <a key={ph.href} href={ph.href} className="text-gray-600 hover:text-blue-900 transition-colors block">
+                        {ph.label}
+                      </a>
+                    ))}
                   </div>
                 </div>
 
@@ -300,8 +333,19 @@ export default function ContactPage() {
                     )}
                   </button>
 
+                  {status === "success" && (
+                    <p className="text-sm text-green-600 text-center">Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+                  )}
+                  {status === "invalid" && (
+                    <p className="text-sm text-red-600 text-center">Заполните имя, телефон и сообщение.</p>
+                  )}
+                  {status === "error" && (
+                    <p className="text-sm text-red-600 text-center">Не удалось отправить. Попробуйте позже или позвоните нам.</p>
+                  )}
+
                   <p className="text-xs text-gray-500 text-center mt-4">
-                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                    Нажимая кнопку, вы соглашаетесь с{" "}
+                    <Link href="/privacy" className="underline hover:text-gray-700">политикой конфиденциальности</Link>
                   </p>
                 </div>
               </div>

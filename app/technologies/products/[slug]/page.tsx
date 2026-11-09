@@ -5,6 +5,7 @@ import DivisionPageHero from '../../../components/DivisionPageHero'
 import SectionHeading from '../../../components/SectionHeading'
 import Reveal from '../../../components/Reveal'
 import TechCTA from '../../TechCTA'
+import { TechIcon, type TechIconType } from '../../visuals'
 import { categories, brandByName } from '../../data'
 import BrandLogo from '../../../components/BrandLogo'
 import { getBrandLogo } from '../../partnerLogos'
@@ -46,6 +47,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         eyebrow="ОБОРУДОВАНИЕ"
         title={category.title}
         description={category.text}
+        visual={<TechIcon type={category.slug as TechIconType} thin className="w-56 h-56 ml-auto" />}
       />
 
       <section className="w-full bg-white py-24 md:py-32 px-6">
@@ -81,15 +83,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <SectionHeading eyebrow="ЕЩЁ ПОСТАВЛЯЕМ" title="Другое оборудование" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {others.map((c, i) => {
-              const Icon = c.icon
               return (
                 <Reveal key={c.slug} delay={i * 0.08}>
                   <Link
                     href={`/technologies/products/${c.slug}`}
                     className="block h-full bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300"
                   >
-                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-                      <Icon className="w-6 h-6 text-blue-900" />
+                    <div className="w-16 h-16 bg-blue-100 rounded-xl p-3 text-blue-900 mb-4">
+                      <TechIcon type={c.slug as TechIconType} className="w-full h-full" />
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900">{c.title}</h3>
                   </Link>
@@ -97,6 +98,17 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               )
             })}
           </div>
+        </div>
+      </section>
+
+      <section className="w-full bg-white py-16 px-6">
+        <div className="max-w-[1100px] mx-auto text-center">
+          <Link
+            href={`/technologies/contact?category=${category.slug}`}
+            className="inline-flex items-center justify-center px-6 py-3 bg-blue-900 text-white font-semibold rounded-lg hover:bg-blue-800 transition-colors"
+          >
+            Запросить предложение: {category.title.toLowerCase()}
+          </Link>
         </div>
       </section>
 

@@ -5,7 +5,10 @@ import DivisionPageHero from '../../components/DivisionPageHero'
 import SectionHeading from '../../components/SectionHeading'
 import Reveal from '../../components/Reveal'
 import TechCTA from '../TechCTA'
+import BrandLogo from '../../components/BrandLogo'
+import { TechIcon, type TechIconType } from '../visuals'
 import { categories, brandByName } from '../data'
+import { getBrandLogo } from '../partnerLogos'
 
 export const metadata: Metadata = {
   title: 'Оборудование — Lukos Technologies | Серверы, СХД, сети, ИБП',
@@ -39,15 +42,14 @@ export default function Page() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((c, i) => {
-              const Icon = c.icon
               return (
                 <Reveal key={c.slug} delay={(i % 3) * 0.1}>
                   <article
                     id={c.slug}
                     className="scroll-mt-28 h-full flex flex-col bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-300"
                   >
-                    <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
-                      <Icon className="w-7 h-7 text-blue-900" />
+                    <div className="w-20 h-20 bg-blue-100 rounded-2xl p-4 text-blue-900 mb-6">
+                      <TechIcon type={c.slug as TechIconType} className="w-full h-full" />
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">
                       <Link href={`/technologies/products/${c.slug}`} className="hover:text-blue-700 transition-colors">
@@ -61,13 +63,21 @@ export default function Page() {
                       <div className="flex flex-wrap gap-2">
                         {c.brands.map((b) => {
                           const brand = brandByName(b)
-                          const cls = 'text-sm text-blue-900 bg-blue-100 rounded-md px-3 py-1'
-                          return brand ? (
-                            <Link key={b} href={`/technologies/brands/${brand.slug}`} className={`${cls} hover:bg-blue-200 transition-colors`}>
-                              {b}
+                          if (!brand) return null
+                          return (
+                            <Link
+                              key={b}
+                              href={`/technologies/brands/${brand.slug}`}
+                              className="bg-white border border-gray-200 rounded-lg h-12 w-28 px-3 flex items-center justify-center hover:shadow-md hover:border-blue-300 transition-all"
+                            >
+                              <BrandLogo
+                                name={brand.name}
+                                logo={getBrandLogo(brand.slug)}
+                                align="center"
+                                className="h-8 w-full"
+                                fallbackClassName="text-xs font-bold text-blue-900 text-center leading-tight"
+                              />
                             </Link>
-                          ) : (
-                            <span key={b} className={cls}>{b}</span>
                           )
                         })}
                       </div>

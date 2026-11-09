@@ -10,12 +10,15 @@ export default function DivisionPageHero({
   description,
   children,
   tall = false,
+  visual,
 }: {
   eyebrow: string;
   title: string;
   description?: string;
   children?: React.ReactNode;
   tall?: boolean;
+  // Декоративная графика справа (только на широких экранах)
+  visual?: React.ReactNode;
 }) {
   return (
     <section
@@ -34,6 +37,12 @@ export default function DivisionPageHero({
         />
       </div>
 
+      {visual && (
+        <div className={`pointer-events-none hidden lg:block absolute right-[3%] -translate-y-1/2 w-[44%] max-w-[760px] text-blue-200/60 ${tall ? "top-[42%]" : "top-[calc(50%+2.75rem)]"}`}>
+          {visual}
+        </div>
+      )}
+
       <div className="relative z-10 max-w-[1600px] mx-auto px-6 pt-40 pb-24 w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -41,11 +50,11 @@ export default function DivisionPageHero({
           transition={{ duration: 0.8 }}
         >
           <p className="text-blue-300 text-sm tracking-[0.2em] uppercase mb-6">{eyebrow}</p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-[1100px]">
+          <h1 className={`text-4xl md:text-6xl font-bold text-white mb-6 leading-tight ${visual ? "lg:text-6xl lg:max-w-[56%]" : "lg:text-7xl max-w-[1100px]"}`}>
             {title}
           </h1>
           {description && (
-            <p className="text-xl text-blue-100 max-w-3xl leading-relaxed">{description}</p>
+            <p className={`text-xl text-blue-100 leading-relaxed ${visual ? "max-w-3xl lg:max-w-[50%]" : "max-w-3xl"}`}>{description}</p>
           )}
           {children}
         </motion.div>

@@ -17,6 +17,7 @@ import {
   Pickaxe,
   Utensils,
 } from 'lucide-react'
+import type { EquipmentType } from './visuals'
 
 export const services = [
   {
@@ -145,4 +146,13 @@ export const industries = [
     text: 'Производства с непрерывными линиями и тяжёлым динамическим оборудованием.',
     highlight: false,
   },
+]
+
+// Оборудование, с которым работаем (список нужно сверить с реальным перечнем)
+export const equipment: { type: EquipmentType; title: string; text: string }[] = [
+  { type: 'drive', title: 'Приводы', text: 'Обслуживание, ремонт и замена узлов' },
+  { type: 'gearbox', title: 'Редукторы', text: 'Диагностика, ремонт, восстановление деталей' },
+  { type: 'pump', title: 'Насосы', text: 'Плановое обслуживание и аварийный ремонт' },
+  { type: 'conveyor', title: 'Конвейеры', text: 'Обслуживание линий и ремонт механизмов' },
+  { type: 'packaging', title: 'Линии упаковки', text: 'Работы на действующих линиях' },
 ]

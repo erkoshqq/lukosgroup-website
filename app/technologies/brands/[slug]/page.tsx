@@ -48,18 +48,17 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         eyebrow="ОФИЦИАЛЬНЫЙ ДИЛЕР"
         title={brand.name}
         description={brand.text}
+        visual={
+          <div className="ml-auto w-80 h-40 bg-white rounded-2xl shadow-2xl flex items-center justify-center p-8">
+            <BrandLogo name={brand.name} logo={logo} align="center" className="h-full w-full" fallbackClassName="text-4xl font-bold text-blue-900 text-center" />
+          </div>
+        }
       />
 
       <section className="w-full bg-white py-24 md:py-32 px-6">
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            <Reveal className="lg:col-span-1">
-              <div className="bg-gray-50 rounded-2xl border border-gray-200 p-10 flex items-center justify-center h-56">
-                <BrandLogo name={brand.name} logo={logo} align="center" className="h-24 w-full max-w-[280px]" />
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.15} className="lg:col-span-2">
+          <div className="grid grid-cols-1 gap-8 items-start">
+            <Reveal delay={0.15}>
               <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-6">
                 Поставка оборудования {brand.name}
               </h2>

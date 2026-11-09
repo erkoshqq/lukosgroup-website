@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Link from "next/link";
 import { Phone, Mail, ArrowRight } from "lucide-react";
 
 export default function CTAConsultation() {
@@ -212,7 +213,8 @@ export default function CTAConsultation() {
                 </button>
 
                 <p className="text-xs text-gray-500 text-center mt-4">
-                  Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                  Нажимая кнопку, вы соглашаетесь с{" "}
+        <Link href="/privacy" className="underline hover:text-gray-700">политикой конфиденциальности</Link>
                 </p>
               </div>
             </div>

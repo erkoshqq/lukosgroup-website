@@ -1,7 +1,6 @@
+import { redirect } from 'next/navigation'
+
+// Отдельной страницы заявки нет: заявка оформляется на странице контактов.
 export default function RequestPage() {
-  return (
-    <main className="min-h-screen flex items-center justify-center text-black">
-      <h1 className="text-4xl font-bold">Оставить заявку</h1>
-    </main>
-  );
+  redirect('/engineering/contact')
 }

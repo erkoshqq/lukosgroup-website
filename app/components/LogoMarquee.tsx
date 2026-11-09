@@ -15,11 +15,15 @@ export default function LogoMarquee({
   items,
   secondsPerItem = 4,
   copies = 4,
+  fadeFrom = "white",
 }: {
   items: MarqueeItem[];
   secondsPerItem?: number;
   copies?: number;
+  // Цвет фона секции, под который подстраивается затухание по краям
+  fadeFrom?: "white" | "gray";
 }) {
+  const fade = fadeFrom === "gray" ? { l: "from-gray-50", r: "from-gray-50" } : { l: "from-white", r: "from-white" };
   const style = {
     animationDuration: `${items.length * secondsPerItem}s`,
     "--marquee-shift": `-${100 / copies}%`,
@@ -28,8 +32,8 @@ export default function LogoMarquee({
   return (
     <div className="marquee relative overflow-hidden">
       {/* Затухание по краям */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
+      <div className={`absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r ${fade.l} to-transparent z-10 pointer-events-none`} />
+      <div className={`absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l ${fade.r} to-transparent z-10 pointer-events-none`} />
 
       <div className="marquee-track flex w-max" style={style}>
         {Array.from({ length: copies }).map((_, copyIndex) => (

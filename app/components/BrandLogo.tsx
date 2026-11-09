@@ -7,11 +7,13 @@ export default function BrandLogo({
   logo,
   className = "h-16 w-[200px]",
   align = "left",
+  fallbackClassName = "text-2xl font-bold text-blue-900 leading-tight",
 }: {
   name: string;
   logo?: string;
   className?: string;
   align?: "left" | "center";
+  fallbackClassName?: string;
 }) {
   return (
     <div className={`flex items-center ${align === "center" ? "justify-center" : ""} ${className}`}>
@@ -22,7 +24,7 @@ export default function BrandLogo({
           className={`w-full h-full object-contain ${align === "center" ? "object-center" : "object-left"}`}
         />
       ) : (
-        <span className="text-2xl font-bold text-blue-900 leading-tight">{name}</span>
+        <span className={fallbackClassName}>{name}</span>
       )}
     </div>
   );

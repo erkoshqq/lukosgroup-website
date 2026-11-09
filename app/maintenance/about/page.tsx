@@ -10,7 +10,7 @@ import { industries } from '../data'
 export const metadata: Metadata = {
   title: 'О направлении — Lukos Maintenance | LUKOS GROUP',
   description:
-    'Lukos Maintenance — сервисное направление группы компаний LUKOS: обслуживание и ремонт динамического оборудования на производственных предприятиях. Опыт на действующем пищевом производстве Pepsi.',
+    'Lukos Maintenance — сервисное направление группы компаний LUKOS: обслуживание и ремонт динамического оборудования на производственных предприятиях. Опыт на действующем пищевом производстве.',
   openGraph: {
     title: 'О направлении — Lukos Maintenance',
     description: 'Сервис и ремонт оборудования на производстве, опора на группу компаний LUKOS.',
@@ -74,12 +74,11 @@ export default function Page() {
             <Reveal delay={0.2} className="space-y-8">
               <div className="bg-blue-900 text-white p-8 rounded-2xl">
                 <p className="text-blue-300 text-sm tracking-[0.2em] uppercase mb-3">ОПЫТ</p>
-                <h3 className="text-2xl font-semibold mb-4">Производство Pepsi</h3>
+                <h3 className="text-2xl font-semibold mb-4">Действующее производство</h3>
                 <p className="text-blue-100 leading-relaxed">
-                  Обслуживаем действующее пищевое производство Pepsi в Алматы, где жёсткие
+                  Есть опыт обслуживания действующего пищевого производства, где жёсткие
                   требования к безопасности и учёту работ. Работаем по заявкам, учитываем
-                  работы в SAP заказчика и соблюдаем правила ОТ и ПБ. Для этого же
-                  предприятия выполняем поверку датчиков и КИПиА.
+                  работы в SAP заказчика и соблюдаем правила ОТ и ПБ.
                 </p>
               </div>
 

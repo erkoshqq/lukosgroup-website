@@ -56,7 +56,7 @@ export const brands: Record<BrandKey, BrandConfig> = {
     },
     shortLabel: "engineering",
     homeHref: "/engineering",
-    ctaHref: "/engineering/request",
+    ctaHref: "/engineering/contact",
     ctaLabel: "Связаться",
     description: "Техническое обследование зданий, дефектоскопия и неразрушающий контроль по всему Казахстану.",
     nav: [

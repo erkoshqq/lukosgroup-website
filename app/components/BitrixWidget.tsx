@@ -7,24 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function BitrixWidget() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpenChat = () => {
-    // Здесь будет код открытия чата Bitrix24
-    console.log("Opening Bitrix chat");
-    // window.Bitrix24?.LiveChat?.open();
-  };
-
-  const handleCallback = () => {
-    // Открытие формы обратного звонка
-    console.log("Opening callback form");
-    // window.Bitrix24?.CallBack?.open();
-  };
-
-  const handleContactForm = () => {
-    // Открытие формы контактов
-    console.log("Opening contact form");
-    // window.Bitrix24?.Form?.open();
-  };
-
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {/* Social Buttons */}
@@ -38,52 +20,52 @@ export default function BitrixWidget() {
             className="flex flex-col gap-3 mb-3"
           >
             {/* Chat Button */}
-            <motion.button
+            <motion.a
               initial={{ x: 100 }}
               animate={{ x: 0 }}
               exit={{ x: 100 }}
               transition={{ delay: 0.1 }}
-              onClick={handleOpenChat}
+              href="https://wa.me/77089537178" target="_blank" rel="noopener noreferrer"
               className="group relative w-14 h-14 bg-gray-900 hover:bg-gray-800 rounded-full flex items-center justify-center shadow-lg transition-all"
-              title="Открыть чат"
+              title="Написать в WhatsApp"
             >
               <MessageSquare className="w-6 h-6 text-white" />
               <span className="absolute right-16 bg-gray-900 text-white text-sm px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                Онлайн чат
+                Написать в WhatsApp
               </span>
-            </motion.button>
+            </motion.a>
 
             {/* Callback Button */}
-            <motion.button
+            <motion.a
               initial={{ x: 100 }}
               animate={{ x: 0 }}
               exit={{ x: 100 }}
               transition={{ delay: 0.15 }}
-              onClick={handleCallback}
+              href="tel:+77089537178"
               className="group relative w-14 h-14 bg-gray-900 hover:bg-gray-800 rounded-full flex items-center justify-center shadow-lg transition-all"
-              title="Обратный звонок"
+              title="Позвонить"
             >
               <Phone className="w-6 h-6 text-white" />
               <span className="absolute right-16 bg-gray-900 text-white text-sm px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                Обратный звонок
+                Позвонить
               </span>
-            </motion.button>
+            </motion.a>
 
             {/* Contact Form Button */}
-            <motion.button
+            <motion.a
               initial={{ x: 100 }}
               animate={{ x: 0 }}
               exit={{ x: 100 }}
               transition={{ delay: 0.2 }}
-              onClick={handleContactForm}
+              href="/engineering/contact"
               className="group relative w-14 h-14 bg-gray-900 hover:bg-gray-800 rounded-full flex items-center justify-center shadow-lg transition-all"
-              title="Контактная форма"
+              title="Оставить заявку"
             >
               <FileText className="w-6 h-6 text-white" />
               <span className="absolute right-16 bg-gray-900 text-white text-sm px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                Связаться с нами
+                Оставить заявку
               </span>
-            </motion.button>
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>
